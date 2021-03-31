@@ -2,7 +2,10 @@ package modele.plateau;
 
 public class Inventaire {
     EntiteStatique[] objets;
-    private final int taille = 20;
+    private int taille;
 
+    public Inventaire(int _taille){
+        taille = _taille;
+    }
 
 }

@@ -12,7 +12,10 @@ public class Heros {
     private int x;
     private int y;
 
+    private char orientation = 'e';
+
     private Jeu jeu;
+    private Inventaire inventaire = new Inventaire(20);
 
     public int getX() {
         return x;
@@ -29,26 +32,46 @@ public class Heros {
     }
 
     public void droite() {
-        if (traversable(x+1, y)) {
-            x ++;
+        if(orientation == 'e'){
+            if (traversable(x+1, y)) {
+                x ++;
+            }
+        }
+        else {
+            orientation = 'e';
         }
     }
 
     public void gauche() {
-        if (traversable(x-1, y)) {
-            x --;
+        if(orientation == 'w'){
+            if (traversable(x-1, y)) {
+                x --;
+            }
+        }
+        else{
+            orientation = 'w';
         }
     }
 
     public void bas() {
-        if (traversable(x, y+1)) {
-            y ++;
+        if(orientation == 's'){
+            if (traversable(x, y+1)) {
+                y ++;
+            }
+        }
+        else{
+            orientation = 's';
         }
     }
 
     public void haut() {
-        if (traversable(x, y-1)) {
-            y --;
+        if(orientation == 'n'){
+            if (traversable(x, y-1)) {
+                y --;
+            }
+        }
+        else{
+            orientation = 'n';
         }
     }
 

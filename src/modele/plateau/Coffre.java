@@ -1,7 +1,7 @@
 package modele.plateau;
 
-public class Cle extends EntiteStatique  {
-    public Cle(Jeu _jeu) { super(_jeu); }
+public class Coffre extends EntiteStatique {
+    public Coffre(Jeu _jeu) { super(_jeu); }
 
     @Override
     public boolean traversable() {

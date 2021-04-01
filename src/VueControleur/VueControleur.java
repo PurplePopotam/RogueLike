@@ -31,8 +31,8 @@ public class VueControleur extends JFrame implements Observer {
     // icones affichées dans la grille
     private ImageIcon icoHeroN, icoHeroE, icoHeroW, icoHeroS;
     private ImageIcon icoCaseNormale;
-    private ImageIcon icoMur;
-    private ImageIcon icoColonne;
+    private ImageIcon icoMur, icoPorte;
+    private ImageIcon icoCle, icoCapsule, icoCoffre;
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
@@ -72,6 +72,11 @@ public class VueControleur extends JFrame implements Observer {
 
         icoCaseNormale = chargerIcone("Images/Vide.png");
         icoMur = chargerIcone("Images/Mur.png");
+        icoPorte = chargerIcone("Images/Porte.png");
+
+        icoCle = chargerIcone("Images/Clef.png");
+        icoCoffre = chargerIcone("Images/Coffre.png");
+        icoCapsule = chargerIcone("Images/capsule.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -119,6 +124,14 @@ public class VueControleur extends JFrame implements Observer {
                     tabJLabel[x][y].setIcon(icoMur);
                 } else if (e instanceof CaseNormale) {
                     tabJLabel[x][y].setIcon(icoCaseNormale);
+                } else if (e instanceof Coffre){
+                    tabJLabel[x][y].setIcon(icoCoffre);
+                } else if (e instanceof Cle){
+                    tabJLabel[x][y].setIcon(icoCle);
+                } else if (e instanceof Capsule){
+                    tabJLabel[x][y].setIcon(icoCapsule);
+                } else if (e instanceof Porte){
+                    tabJLabel[x][y].setIcon(icoPorte);
                 }
             }
         }

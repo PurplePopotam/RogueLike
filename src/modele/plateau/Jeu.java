@@ -59,6 +59,12 @@ public class Jeu extends Observable implements Runnable {
         addEntiteStatique(new Mur(this), 2, 6);
         addEntiteStatique(new Mur(this), 3, 6);
 
+        // Les pickups
+        addEntiteStatique(new Cle(this), 1, 1);
+        addEntiteStatique(new Coffre(this), 3, 5);
+        addEntiteStatique(new Capsule(this), 10, 3);
+        addEntiteStatique(new Porte(this), 19, 4);
+
         for (int x = 0; x < SIZE_X; x++) {
             for (int y = 0; y < SIZE_Y; y++) {
                 if (grilleEntitesStatiques[x][y] == null) {

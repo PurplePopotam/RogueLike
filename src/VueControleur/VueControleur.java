@@ -1,6 +1,6 @@
 package VueControleur;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -94,10 +94,12 @@ public class VueControleur extends JFrame implements Observer {
 
     private void placerLesComposantsGraphiques() {
         setTitle("Roguelike");
-        setSize(20 * sizeX, 25 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
+        setSize(20 * sizeX, 22 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
 
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
+
+        grilleJLabels.setBackground(Color.black);//met la couleur du fond de la fenêtre en noir, plus adapté à un jeu de donjon
 
         tabJLabel = new JLabel[sizeX][sizeY];
 

@@ -15,7 +15,7 @@ public class Heros {
     private char orientation = 's';
 
     private Jeu jeu;
-    private Inventaire inventaire = new Inventaire(20);
+    private Inventaire inventaire = new Inventaire();
 
     public int getX() {
         return x;

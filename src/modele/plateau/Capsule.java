@@ -1,6 +1,6 @@
 package modele.plateau;
 
-public class Capsule extends EntiteStatique{
+public class Capsule extends Pickup {
     public Capsule(Jeu _jeu) { super(_jeu); }
 
     @Override

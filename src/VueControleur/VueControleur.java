@@ -94,7 +94,7 @@ public class VueControleur extends JFrame implements Observer {
 
     private void placerLesComposantsGraphiques() {
         setTitle("Roguelike");
-        setSize(400, 250);
+        setSize(20 * sizeX, 25 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
 
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille

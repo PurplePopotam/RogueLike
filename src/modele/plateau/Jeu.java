@@ -10,8 +10,8 @@ import java.util.Observable;
 
 public class Jeu extends Observable implements Runnable {
 
-    public static final int SIZE_X = 20;
-    public static final int SIZE_Y = 10;
+    public static final int SIZE_X = 40;    //J'ai augmenté la taille du niveau
+    public static final int SIZE_Y = 20;
 
     private int pause = 200; // période de rafraichissement
 

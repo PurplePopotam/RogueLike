@@ -6,7 +6,9 @@
 package modele.plateau;
 
 import java.util.Observable;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Jeu extends Observable implements Runnable {
 
@@ -20,7 +22,7 @@ public class Jeu extends Observable implements Runnable {
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
-        initialisationDesEntites();
+        initialisationDesEntites("Images/Map.txt");
     }
 
     public Heros getHeros() {
@@ -39,7 +41,55 @@ public class Jeu extends Observable implements Runnable {
 		return grilleEntitesStatiques[x][y];
 	}
 
-    private void initialisationDesEntites() {
+    private void initialisationDesEntites(String path) {
+
+        /*Work in Progress*/
+        /*
+        try{
+            File map = new File(path);
+            Scanner myReader = new Scanner(map);
+
+            for(int x = 0; x < SIZE_X;x++) {
+                for (int y = 0; y < SIZE_Y; y++) {
+                    if (myReader.hasNext()) {
+                        switch (myReader.next()) {
+                            case "_":
+                                addEntiteStatique(new CaseNormale(this), y, x);
+                                break;
+                            case "M":
+                                addEntiteStatique(new Mur(this), y, x);
+                                break;
+                            case "H":
+                                heros = new Heros(this, y, x);
+                                break;
+                            case "P":
+                                addEntiteStatique(new Coffre(this), y, x);
+                                break;
+                            case "A":
+                                addEntiteStatique(new Coffre(this), y, x);
+                                break;
+                            case "B":
+                                addEntiteStatique(new Cle(this), y, x);
+                                break;
+                            case "C":
+                                addEntiteStatique(new Capsule(this), y, x);
+                                break;
+                            case ".":
+                                break;
+                        }
+                    }
+
+                }
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Erreur, la map n'a pas été trouvée.");
+            e.printStackTrace();
+        }
+        */
+
+
         heros = new Heros(this, 4, 4);
 
 
@@ -70,7 +120,6 @@ public class Jeu extends Observable implements Runnable {
                 if (grilleEntitesStatiques[x][y] == null) {
                     grilleEntitesStatiques[x][y] = new CaseNormale(this);
                 }
-
             }
         }
 
@@ -101,7 +150,6 @@ public class Jeu extends Observable implements Runnable {
 
     private void addEntiteStatique(EntiteStatique e, int x, int y) {
         grilleEntitesStatiques[x][y] = e;
-        int i = 0;
     }
 
 }

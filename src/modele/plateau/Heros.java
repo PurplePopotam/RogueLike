@@ -12,7 +12,7 @@ public class Heros {
     private int x;
     private int y;
 
-    private char orientation = 'e';
+    private char orientation = 's';
 
     private Jeu jeu;
     private Inventaire inventaire = new Inventaire(20);
@@ -23,6 +23,10 @@ public class Heros {
 
     public int getY() {
         return y;
+    }
+
+    public char getOrientation() {
+        return orientation;
     }
 
     public Heros(Jeu _jeu, int _x, int _y) {

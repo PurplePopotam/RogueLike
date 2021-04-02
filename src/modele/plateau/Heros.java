@@ -37,7 +37,10 @@ public class Heros {
 
     public void droite() {
         if(orientation == 'e'){
-            if (traversable(x+1, y)) {
+            if(jeu.getEntite(x+1,y) instanceof Porte){
+                traverserPorte(x+1, y);
+            }
+            else if (traversable(x+1, y)) {
                 x ++;
             }
         }
@@ -48,7 +51,10 @@ public class Heros {
 
     public void gauche() {
         if(orientation == 'w'){
-            if (traversable(x-1, y)) {
+            if(jeu.getEntite(x-1,y) instanceof Porte){
+                traverserPorte(x-1, y);
+            }
+            else if (traversable(x-1, y)) {
                 x --;
             }
         }
@@ -59,7 +65,10 @@ public class Heros {
 
     public void bas() {
         if(orientation == 's'){
-            if (traversable(x, y+1)) {
+            if(jeu.getEntite(x,y+1) instanceof Porte){
+                traverserPorte(x, y+1);
+            }
+            else if (traversable(x, y+1)) {
                 y ++;
             }
         }
@@ -70,7 +79,10 @@ public class Heros {
 
     public void haut() {
         if(orientation == 'n'){
-            if (traversable(x, y-1)) {
+            if(jeu.getEntite(x,y-1) instanceof Porte){
+                traverserPorte(x, y-1);
+            }
+            else if (traversable(x, y-1)) {
                 y --;
             }
         }
@@ -85,6 +97,19 @@ public class Heros {
             return jeu.getEntite(x, y).traversable();
         } else {
             return false;
+        }
+    }
+
+    private void traverserPorte(int _x, int _y){
+        EntiteStatique e = jeu.getEntite(_x,_y);
+        if(e instanceof Porte && ((Porte) e).getJumelle() != null){
+            Porte dest = ((Porte) e).getJumelle();
+            switch (dest.getDirection()){
+                case 'n': x = dest.getX(); y = dest.getY() + 1; break;
+                case 's': x = dest.getX(); y = dest.getY() - 1; break;
+                case 'e': x = dest.getX() - 1; y = dest.getY(); break;
+                case 'w': x = dest.getX() + 1; y = dest.getY(); break;
+            }
         }
     }
 }

@@ -43,36 +43,40 @@ public class Jeu extends Observable implements Runnable {
 
     private void initialisationDesEntites(String path) {
 
-        /*Work in Progress*/
-        /*
+        /*Permet de lire une carte depuis un fichier .txt,
+          la génération de niveau est donc pour le moment très simplifiée.
+          ATTENTION la carte doit faire la même taille que le jeu (SIZE_X,SIZE_Y)
+          sinon le comportement est complètement erronné.
+         */
+
         try{
             File map = new File(path);
             Scanner myReader = new Scanner(map);
 
-            for(int x = 0; x < SIZE_X;x++) {
-                for (int y = 0; y < SIZE_Y; y++) {
+            for(int y = 0; y < SIZE_Y;y++) {
+                for (int x = 0; x < SIZE_X; x++) {
                     if (myReader.hasNext()) {
-                        switch (myReader.next()) {
+
+                        String s = myReader.next();
+
+                        switch (s) {
                             case "_":
-                                addEntiteStatique(new CaseNormale(this), y, x);
+                                addEntiteStatique(new CaseNormale(this), x, y);
                                 break;
                             case "M":
-                                addEntiteStatique(new Mur(this), y, x);
-                                break;
-                            case "H":
-                                heros = new Heros(this, y, x);
+                                addEntiteStatique(new Mur(this), x, y);
                                 break;
                             case "P":
-                                addEntiteStatique(new Coffre(this), y, x);
+                                addEntiteStatique(new Porte(this), x, y);
                                 break;
                             case "A":
-                                addEntiteStatique(new Coffre(this), y, x);
+                                addEntiteStatique(new Coffre(this), x, y);
                                 break;
                             case "B":
-                                addEntiteStatique(new Cle(this), y, x);
+                                addEntiteStatique(new Cle(this), x, y);
                                 break;
                             case "C":
-                                addEntiteStatique(new Capsule(this), y, x);
+                                addEntiteStatique(new Capsule(this), x, y);
                                 break;
                             case ".":
                                 break;
@@ -87,43 +91,8 @@ public class Jeu extends Observable implements Runnable {
             System.out.println("Erreur, la map n'a pas été trouvée.");
             e.printStackTrace();
         }
-        */
 
-
-        heros = new Heros(this, 4, 4);
-
-
-
-        // murs extérieurs horizontaux
-        for (int x = 0; x < 20; x++) {
-            addEntiteStatique(new Mur(this), x, 0);
-            addEntiteStatique(new Mur(this), x, 9);
-        }
-
-        // murs extérieurs verticaux
-        for (int y = 1; y < 9; y++) {
-            addEntiteStatique(new Mur(this), 0, y);
-            addEntiteStatique(new Mur(this), 19, y);
-        }
-
-        addEntiteStatique(new Mur(this), 2, 6);
-        addEntiteStatique(new Mur(this), 3, 6);
-
-        // Les pickups
-        addEntiteStatique(new Cle(this), 1, 1);
-        addEntiteStatique(new Coffre(this), 3, 5);
-        addEntiteStatique(new Capsule(this), 10, 3);
-        addEntiteStatique(new Porte(this), 19, 4);
-
-        for (int x = 0; x < SIZE_X; x++) {
-            for (int y = 0; y < SIZE_Y; y++) {
-                if (grilleEntitesStatiques[x][y] == null) {
-                    grilleEntitesStatiques[x][y] = new CaseNormale(this);
-                }
-            }
-        }
-
-
+        heros = new Heros(this, 10, 4);
     }
 
     public void start() {
@@ -149,7 +118,12 @@ public class Jeu extends Observable implements Runnable {
 
 
     private void addEntiteStatique(EntiteStatique e, int x, int y) {
-        grilleEntitesStatiques[x][y] = e;
+        try {
+            grilleEntitesStatiques[x][y] = e;
+        }
+        catch (ArrayIndexOutOfBoundsException ex){
+            System.out.println("Entité en dehors du terrain");
+        }
     }
 
 }

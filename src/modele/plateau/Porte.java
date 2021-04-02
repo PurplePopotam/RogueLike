@@ -1,7 +1,9 @@
 package modele.plateau;
 
 public class Porte extends EntiteStatique {
+
     private boolean Verouillee = true;
+
     public Porte(Jeu _jeu) { super(_jeu); }
 
     public boolean isVerouillee() {
@@ -14,7 +16,6 @@ public class Porte extends EntiteStatique {
 
     @Override
     public boolean traversable() {
-
         return(!Verouillee);
     }
 

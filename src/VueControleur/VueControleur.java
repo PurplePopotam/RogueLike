@@ -29,10 +29,10 @@ public class VueControleur extends JFrame implements Observer {
     private int sizeY;
 
     // icones affichées dans la grille
-    private ImageIcon icoHeroN, icoHeroE, icoHeroW, icoHeroS;
-    private ImageIcon icoCaseNormale;
-    private ImageIcon icoMur, icoPorte;
-    private ImageIcon icoCle, icoCapsule, icoCoffre;
+    private ImageIcon icoHeroN, icoHeroE, icoHeroW, icoHeroS;   //Heros
+    private ImageIcon icoCaseNormale, icoDalleUsageUnique, icoDalleUsageUnique_Enflammee;       //Dalles
+    private ImageIcon icoMur, icoPorte;     //Murs portes
+    private ImageIcon icoCle, icoCapsule, icoCoffre;    //Pickups
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
@@ -71,6 +71,8 @@ public class VueControleur extends JFrame implements Observer {
         icoHeroS = chargerIcone("Images/Knight_South.png");
 
         icoCaseNormale = chargerIcone("Images/Vide.png");
+        icoDalleUsageUnique = chargerIcone("Images/DalleUsageUnique.png");
+        icoDalleUsageUnique_Enflammee = chargerIcone("Images/DalleUsageUnique_Enflammee.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoPorte = chargerIcone("Images/Porte.png");
 
@@ -134,6 +136,8 @@ public class VueControleur extends JFrame implements Observer {
                     tabJLabel[x][y].setIcon(icoCapsule);
                 } else if (e instanceof Porte){
                     tabJLabel[x][y].setIcon(icoPorte);
+                } else if (e instanceof DalleUsageUnique){
+                    tabJLabel[x][y].setIcon(icoDalleUsageUnique);
                 }
             }
         }

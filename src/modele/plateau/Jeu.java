@@ -78,6 +78,9 @@ public class Jeu extends Observable implements Runnable {
                             case "C":
                                 addEntiteStatique(new Capsule(this), x, y);
                                 break;
+                            case "D":
+                                addEntiteStatique(new DalleUsageUnique(this), x, y);
+                                break;
                             case ".":
                                 break;
                         }
@@ -91,7 +94,8 @@ public class Jeu extends Observable implements Runnable {
             System.out.println("Erreur, la map n'a pas été trouvée.");
             e.printStackTrace();
         }
-        //Entités particulières qui ont besoin d'être initialisées à part/d'autres initialisation
+
+        //Entités particulières qui ont besoin d'être initialisées à part ou besoin d'autres initialisation
         heros = new Heros(this, 10, 4);
 
         Porte porte1 = (Porte)this.getEntite(19,4);

@@ -17,9 +17,9 @@ public class Jeu extends Observable implements Runnable {
 
     private int pause = 200; // période de rafraichissement
 
-    private double spawnRateCoffre = 0.008;
-    private double spawnRateCle = 0.008;
-    private double spawnRateCapsule = 0.01;
+    private final double spawnRateCoffre = 0.008;
+    private final double spawnRateCle = 0.008;
+    private final double spawnRateCapsule = 0.01;
 
     private Heros heros;
 

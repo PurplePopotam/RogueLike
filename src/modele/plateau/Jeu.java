@@ -17,6 +17,10 @@ public class Jeu extends Observable implements Runnable {
 
     private int pause = 200; // période de rafraichissement
 
+    private double spawnRateCoffre = 0.008;
+    private double spawnRateCle = 0.008;
+    private double spawnRateCapsule = 0.01;
+
     private Heros heros;
 
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
@@ -43,6 +47,7 @@ public class Jeu extends Observable implements Runnable {
 
     private void initialisationDesEntites(String path) {
 
+        double tirage = 0f;
         /*Permet de lire une carte depuis un fichier .txt,
           la génération de niveau est donc pour le moment très simplifiée.
           ATTENTION la carte doit faire la même taille que le jeu (SIZE_X,SIZE_Y)
@@ -61,8 +66,21 @@ public class Jeu extends Observable implements Runnable {
 
                         switch (s) {
                             case "_":
-                                addEntiteStatique(new CaseNormale(this), x, y);
-                                break;
+                                tirage = Math.random();
+
+                                if(tirage < spawnRateCoffre){
+                                    addEntiteStatique(new Coffre(this), x, y); break;
+                                }
+                                else if(tirage > spawnRateCoffre && tirage < spawnRateCoffre + spawnRateCapsule){
+                                    addEntiteStatique(new Capsule(this), x, y); break;
+                                }
+                                else if(tirage > spawnRateCoffre + spawnRateCapsule && tirage < spawnRateCapsule + spawnRateCle + spawnRateCoffre){
+                                    addEntiteStatique(new Cle(this), x, y); break;
+                                }
+                                else{
+                                    addEntiteStatique(new CaseNormale(this), x, y);
+                                    break;
+                                }
                             case "M":
                                 addEntiteStatique(new Mur(this), x, y);
                                 break;
@@ -97,6 +115,7 @@ public class Jeu extends Observable implements Runnable {
 
         //Entités particulières qui ont besoin d'être initialisées à part ou besoin d'autres initialisation
         heros = new Heros(this, 10, 4);
+        addEntiteStatique(new CaseNormale(this), 10, 4);    //Pour être sûr qu'il n'y est pas de pickup sous le joueur en début de partie
 
         Porte porte1 = (Porte)this.getEntite(19,4);
         Porte porte2 = (Porte)this.getEntite(6,13);

@@ -8,7 +8,11 @@ public class DalleUsageUnique extends EntiteStatique {
 
     @Override
     public boolean traversable() {
-        return !enflammee;
+        if(!enflammee){
+            enflammee = true;
+            return true;
+        }
+        else return false;
     }
 
     public boolean isEnflammee() {

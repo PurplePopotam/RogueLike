@@ -137,7 +137,12 @@ public class VueControleur extends JFrame implements Observer {
                 } else if (e instanceof Porte){
                     tabJLabel[x][y].setIcon(icoPorte);
                 } else if (e instanceof DalleUsageUnique){
-                    tabJLabel[x][y].setIcon(icoDalleUsageUnique);
+                    if(((DalleUsageUnique) e).isEnflammee()){
+                        tabJLabel[x][y].setIcon(icoDalleUsageUnique_Enflammee);
+                    }
+                    else{
+                        tabJLabel[x][y].setIcon(icoDalleUsageUnique);
+                    }
                 }
             }
         }

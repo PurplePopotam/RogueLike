@@ -5,6 +5,9 @@
  */
 package modele.plateau;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Héros du jeu
  */
@@ -15,7 +18,7 @@ public class Heros {
     private char orientation = 's';
 
     private Jeu jeu;
-    private Inventaire inventaire = new Inventaire();
+    private Inventaire inventaire;
 
     public int getX() {
         return x;
@@ -33,6 +36,7 @@ public class Heros {
         jeu = _jeu;
         x = _x;
         y = _y;
+        inventaire = new Inventaire();
     }
 
     public void droite() {
@@ -112,4 +116,5 @@ public class Heros {
             }
         }
     }
+
 }

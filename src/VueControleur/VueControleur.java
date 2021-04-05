@@ -36,11 +36,14 @@ public class VueControleur extends JFrame implements Observer {
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
+    private JFrame inventaire;
 
     public VueControleur(Jeu _jeu) {
         sizeX = jeu.SIZE_X;
         sizeY = _jeu.SIZE_Y;
         jeu = _jeu;
+
+        inventaire = new JFrame("Inventaire");
 
         chargerLesIcones();
         placerLesComposantsGraphiques();
@@ -48,6 +51,7 @@ public class VueControleur extends JFrame implements Observer {
     }
 
     private void ajouterEcouteurClavier() {
+        //Pour la fenêtre principale
         addKeyListener(new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
             @Override
             public void keyPressed(KeyEvent e) {
@@ -56,7 +60,16 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_RIGHT : jeu.getHeros().droite();break;
                     case KeyEvent.VK_DOWN : jeu.getHeros().bas(); break;
                     case KeyEvent.VK_UP : jeu.getHeros().haut(); break;
-
+                    case KeyEvent.VK_E: inventaire.setVisible(true); break;
+                }
+            }
+        });
+        //Pour la fenêtre d'inventaire
+        inventaire.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_E: inventaire.setVisible(false);
                 }
             }
         });
@@ -99,8 +112,11 @@ public class VueControleur extends JFrame implements Observer {
         setSize(20 * sizeX, 22 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
 
-        JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
+        inventaire.setSize(400,150);
+        inventaire.setLocationRelativeTo(this);
+        inventaire.setLocation(0, 22 * sizeY);
 
+        JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
         grilleJLabels.setBackground(Color.black);//met la couleur du fond de la fenêtre en noir, plus adapté à un jeu de donjon
 
         tabJLabel = new JLabel[sizeX][sizeY];
@@ -112,6 +128,7 @@ public class VueControleur extends JFrame implements Observer {
                 grilleJLabels.add(jlab);
             }
         }
+
         add(grilleJLabels);
     }
 

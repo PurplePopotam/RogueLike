@@ -36,7 +36,11 @@ public class VueControleur extends JFrame implements Observer {
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
+    private ImageIcon icoCleInv, icoCapsuleInv, icoCoffreInv, icoVideInv;
+
     private JFrame inventaire;
+    private int tailleInv;
+    private JLabel[][] tabJLabelInv;    //cases graphiques pour l'inventaire
 
     public VueControleur(Jeu _jeu) {
         sizeX = jeu.SIZE_X;
@@ -60,7 +64,12 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_RIGHT : jeu.getHeros().droite();break;
                     case KeyEvent.VK_DOWN : jeu.getHeros().bas(); break;
                     case KeyEvent.VK_UP : jeu.getHeros().haut(); break;
-                    case KeyEvent.VK_E: inventaire.setVisible(true); break;
+                    case KeyEvent.VK_E: if(!inventaire.isVisible()){
+                                             inventaire.setVisible(true);
+                                         }
+                                        else{
+                                            inventaire.setVisible(false);
+                                        } break;
                 }
             }
         });
@@ -77,21 +86,29 @@ public class VueControleur extends JFrame implements Observer {
 
 
     private void chargerLesIcones() {
-
+        //Icones Heros
         icoHeroN = chargerIcone("Images/Knight_North.png");
         icoHeroE = chargerIcone("Images/Knight_East.png");
         icoHeroW = chargerIcone("Images/Knight_West.png");
         icoHeroS = chargerIcone("Images/Knight_South.png");
 
+        //Icones cases
         icoCaseNormale = chargerIcone("Images/Vide.png");
         icoDalleUsageUnique = chargerIcone("Images/DalleUsageUnique.png");
         icoDalleUsageUnique_Enflammee = chargerIcone("Images/DalleUsageUnique_Enflammee.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoPorte = chargerIcone("Images/Porte.png");
 
+        //Icones Pickups
         icoCle = chargerIcone("Images/Clef.png");
         icoCoffre = chargerIcone("Images/Coffre.png");
         icoCapsule = chargerIcone("Images/capsule.png");
+
+        //Icones Pickups inventaire
+        icoCapsuleInv = chargerIcone("Images/CapsuleInv.png");
+        icoCoffreInv = chargerIcone("Images/CoffreInv.png");
+        icoCleInv = chargerIcone("Images/CleInv.png");
+        icoVideInv = chargerIcone("Images/VideInv.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -108,13 +125,19 @@ public class VueControleur extends JFrame implements Observer {
     }
 
     private void placerLesComposantsGraphiques() {
+        tailleInv = jeu.getHeros().getInventaire().getTaille();
+
         setTitle("Roguelike");
         setSize(20 * sizeX, 22 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
 
-        inventaire.setSize(400,150);
+        inventaire.setSize(tailleInv * 48,100);
         inventaire.setLocationRelativeTo(this);
         inventaire.setLocation(0, 22 * sizeY);
+        JComponent grilleJLabelsInv = new JPanel(new GridLayout(1, tailleInv));  //Grille avec le bon nombre de slots
+        grilleJLabelsInv.setBackground(Color.darkGray);
+
+        tabJLabelInv = new JLabel[1][tailleInv];
 
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
         grilleJLabels.setBackground(Color.black);//met la couleur du fond de la fenêtre en noir, plus adapté à un jeu de donjon
@@ -128,15 +151,23 @@ public class VueControleur extends JFrame implements Observer {
                 grilleJLabels.add(jlab);
             }
         }
+        
+        for(int y = 0; y < tailleInv; y++){
+            JLabel jlab = new JLabel();
+            tabJLabelInv[0][y] = jlab;
+            grilleJLabelsInv.add(jlab);
+        }
 
         add(grilleJLabels);
+        inventaire.add(grilleJLabelsInv);
     }
 
     
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabJLabel)
      */
-    private void mettreAJourAffichage() {
+    private void mettreAJourAffichageNiveau() {
+        //affichage niveau
 
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
@@ -164,7 +195,47 @@ public class VueControleur extends JFrame implements Observer {
             }
         }
 
+        //affichage Inventaire
 
+        for(int y = 0; y < tailleInv; y++){
+            Pickup p = jeu.getHeros().getInventaire().getInventaire(y);
+            if(p instanceof Capsule){
+                tabJLabelInv[0][y].setIcon(icoCapsuleInv);
+            }
+            else if (p instanceof Cle){
+                tabJLabelInv[0][y].setIcon(icoCleInv);
+            }
+            else if (p instanceof Coffre){
+                tabJLabelInv[0][y].setIcon(icoCoffreInv);
+            }
+            else{
+                tabJLabelInv[0][y].setIcon(icoVideInv);
+            }
+        }
+        //affichage Heros
+    }
+
+    public void mettreAJourAffichageInventaire(){
+        tailleInv = jeu.getHeros().getInventaire().getTaille();
+
+        for(int y = 0; y < tailleInv; y++){
+            Pickup p = jeu.getHeros().getInventaire().getInventaire(y);
+            if(p instanceof Capsule){
+                tabJLabelInv[0][y].setIcon(icoCapsuleInv);
+            }
+            else if (p instanceof Cle){
+                tabJLabelInv[0][y].setIcon(icoCleInv);
+            }
+            else if (p instanceof Coffre){
+                tabJLabelInv[0][y].setIcon(icoCoffreInv);
+            }
+            else{
+                tabJLabelInv[0][y].setIcon(icoVideInv);
+            }
+        }
+    }
+
+    public void mettreAJourAffichageHeros(){
         switch(jeu.getHeros().getOrientation()){
             case 'n':
                 tabJLabel[jeu.getHeros().getX()][jeu.getHeros().getY()].setIcon(icoHeroN); break;
@@ -176,21 +247,19 @@ public class VueControleur extends JFrame implements Observer {
                 tabJLabel[jeu.getHeros().getX()][jeu.getHeros().getY()].setIcon(icoHeroW); break;
 
         }
-
-
-
     }
-
     @Override
     public void update(Observable o, Object arg) {
-        mettreAJourAffichage();
+        mettreAJourAffichageNiveau();
+        mettreAJourAffichageInventaire();
+        mettreAJourAffichageHeros();
         /*
         SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         mettreAJourAffichage();
                     }
-                }); 
+                });
         */
 
     }

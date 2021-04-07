@@ -32,6 +32,10 @@ public class Heros {
         return orientation;
     }
 
+    public Inventaire getInventaire() {
+        return inventaire;
+    }
+
     public Heros(Jeu _jeu, int _x, int _y) {
         jeu = _jeu;
         x = _x;

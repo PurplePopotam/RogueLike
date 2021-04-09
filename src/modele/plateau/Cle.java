@@ -8,6 +8,4 @@ public class Cle extends Pickup {
         return true;
     }
 
-
-
 }

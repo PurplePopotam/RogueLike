@@ -29,8 +29,6 @@ public class Coffre extends Pickup {
     }
 
     public void enlever(int i){
-        Pickup res;
-
         contenu[i] = null;
     }
 }

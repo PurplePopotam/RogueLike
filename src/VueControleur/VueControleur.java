@@ -198,7 +198,7 @@ public class VueControleur extends JFrame implements Observer {
         //affichage Inventaire
 
         for(int y = 0; y < tailleInv; y++){
-            Pickup p = jeu.getHeros().getInventaire().getInventaire(y);
+            Pickup p = jeu.getHeros().getInventaire().getContenu(y);
             if(p instanceof Capsule){
                 tabJLabelInv[0][y].setIcon(icoCapsuleInv);
             }
@@ -219,7 +219,7 @@ public class VueControleur extends JFrame implements Observer {
         tailleInv = jeu.getHeros().getInventaire().getTaille();
 
         for(int y = 0; y < tailleInv; y++){
-            Pickup p = jeu.getHeros().getInventaire().getInventaire(y);
+            Pickup p = jeu.getHeros().getInventaire().getContenu(y);
             if(p instanceof Capsule){
                 tabJLabelInv[0][y].setIcon(icoCapsuleInv);
             }

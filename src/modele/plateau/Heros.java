@@ -18,6 +18,7 @@ public class Heros {
     private char orientation = 's';
 
     private Jeu jeu;
+
     private Inventaire inventaire;
 
     public int getX() {
@@ -40,7 +41,7 @@ public class Heros {
         jeu = _jeu;
         x = _x;
         y = _y;
-        inventaire = new Inventaire();
+        inventaire = new Inventaire(jeu);
     }
 
     public void droite() {
@@ -99,7 +100,7 @@ public class Heros {
         }
     }
 
-    private boolean traversable(int x, int y) {
+    public boolean traversable(int x, int y) {
 
         if (x >0 && x < jeu.SIZE_X && y > 0 && y < jeu.SIZE_Y) {
             return jeu.getEntite(x, y).traversable();
@@ -108,7 +109,7 @@ public class Heros {
         }
     }
 
-    private void traverserPorte(int _x, int _y){
+    public void traverserPorte(int _x, int _y){
         EntiteStatique e = jeu.getEntite(_x,_y);
         if(e instanceof Porte && ((Porte) e).getJumelle() != null){
             Porte dest = ((Porte) e).getJumelle();

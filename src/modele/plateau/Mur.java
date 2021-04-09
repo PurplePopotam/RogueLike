@@ -7,4 +7,6 @@ public class Mur extends EntiteStatique {
     public boolean traversable() {
         return false;
     }
+
 }
+

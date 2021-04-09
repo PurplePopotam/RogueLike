@@ -99,8 +99,12 @@ public class Jeu extends Observable implements Runnable {
                             case "D":
                                 addEntiteStatique(new DalleUsageUnique(this), x, y);
                                 break;
+                            case "V":
+                                addEntiteStatique(new CaseVide(this), x, y);
+                                break;
                             case ".":
                                 break;
+
                         }
                     }
 

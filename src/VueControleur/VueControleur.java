@@ -33,7 +33,7 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoCaseNormale, icoDalleUsageUnique, icoDalleUsageUnique_Enflammee;       //Dalles
     private ImageIcon icoMur, icoPorte;     //Murs portes
     private ImageIcon icoCle, icoCapsule, icoCoffre;    //Pickups
-
+    private ImageIcon icoCaseVide; //CaseVide
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private ImageIcon icoCleInv, icoCapsuleInv, icoCoffreInv, icoVideInv;
@@ -100,7 +100,7 @@ public class VueControleur extends JFrame implements Observer {
         icoDalleUsageUnique_Enflammee = chargerIcone("Images/DalleUsageUnique_Enflammee.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoPorte = chargerIcone("Images/Porte.png");
-
+        icoCaseVide = chargerIcone( "Images/CaseVide.png");
         //Icones Pickups
         icoCle = chargerIcone("Images/Clef.png");
         icoCoffre = chargerIcone("Images/Coffre.png");
@@ -193,6 +193,8 @@ public class VueControleur extends JFrame implements Observer {
                     else{
                         tabJLabel[x][y].setIcon(icoDalleUsageUnique);
                     }
+                } else if (e instanceof CaseVide){
+                    tabJLabel[x][y].setIcon(icoCaseVide);
                 }
             }
         }

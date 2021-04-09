@@ -52,3 +52,5 @@ public class Inventaire {
         contenu[i] = null;
     }
 }
+
+//fini

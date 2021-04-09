@@ -29,14 +29,23 @@ public class Inventaire {
         return taille;
     }
 
-    public boolean addItem(Pickup p){
-        for(int i =0; i < taille;i++){
+    public void addItem(Pickup p){
+        int i = 0;
+        while(contenu[i] != null){
+            i++;
+        }
+        if(i < taille){
+            contenu[i] = p;
+        }
+    }
+
+    public boolean isFull(){
+        for (int i = 0; i < taille; i++){
             if(contenu[i] == null){
-                contenu[i] = p;
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public void removeItem(int i){

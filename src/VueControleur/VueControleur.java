@@ -70,6 +70,8 @@ public class VueControleur extends JFrame implements Observer {
                                         else{
                                             inventaire.setVisible(false);
                                         } break;
+                    case KeyEvent.VK_T: jeu.getHeros().ramasser();
+                                        break;
                 }
             }
         });

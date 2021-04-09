@@ -164,7 +164,7 @@ public class Jeu extends Observable implements Runnable {
     }
 
 
-    private void addEntiteStatique(EntiteStatique e, int x, int y) {
+    public void addEntiteStatique(EntiteStatique e, int x, int y) {
         try {
             grilleEntitesStatiques[x][y] = e;
         }
@@ -173,4 +173,12 @@ public class Jeu extends Observable implements Runnable {
         }
     }
 
+    public void removeEntiteStatique(int x, int y){
+        try {
+            grilleEntitesStatiques[x][y] = null;
+        }
+        catch (ArrayIndexOutOfBoundsException ex){
+            System.out.println("Entité en dehors du terrain");
+        }
+    }
 }

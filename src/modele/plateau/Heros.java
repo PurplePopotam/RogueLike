@@ -158,6 +158,83 @@ public class Heros {
                 }
                 break;
         }
+    }
 
+    public void deposer(int i){
+        EntiteStatique e;
+        switch(orientation){
+            case 'n':
+                e = jeu.getEntite(x,y-1);
+                if(e instanceof CaseNormale){
+                    if(inventaire.getContenu(i) instanceof Cle){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x, y-1);
+                        jeu.addEntiteStatique(new Cle(jeu), x, y-1);
+                    } else if(inventaire.getContenu(i) instanceof Coffre){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x, y-1);
+                        jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
+                    } else if(inventaire.getContenu(i) instanceof Capsule){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x, y-1);
+                        jeu.addEntiteStatique(new Capsule(jeu), x, y-1);
+                    }
+                }
+                break;
+            case 'e':
+                e = jeu.getEntite(x+1,y);
+                if(e instanceof CaseNormale){
+                    if(inventaire.getContenu(i) instanceof Cle){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x+1,y);
+                        jeu.addEntiteStatique(new Cle(jeu), x+1,y);
+                    } else if(inventaire.getContenu(i) instanceof Coffre){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x+1,y);
+                        jeu.addEntiteStatique(new Coffre(jeu), x+1,y);
+                    } else if(inventaire.getContenu(i) instanceof Capsule){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x+1,y);
+                        jeu.addEntiteStatique(new Capsule(jeu), x+1,y);
+                    }
+                }
+                break;
+            case 's':
+                e = jeu.getEntite(x,y+1);
+                if(e instanceof CaseNormale){
+                    if(inventaire.getContenu(i) instanceof Cle){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x,y+1);
+                        jeu.addEntiteStatique(new Cle(jeu), x,y+1);
+                    } else if(inventaire.getContenu(i) instanceof Coffre){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x,y+1);
+                        jeu.addEntiteStatique(new Coffre(jeu), x,y+1);
+                    } else if(inventaire.getContenu(i) instanceof Capsule){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x,y+1);
+                        jeu.addEntiteStatique(new Capsule(jeu), x,y+1);
+                    }
+                }
+                break;
+            case 'w':
+                e = jeu.getEntite(x-1,y);
+                if(e instanceof CaseNormale){
+                    if(inventaire.getContenu(i) instanceof Cle){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x-1,y);
+                        jeu.addEntiteStatique(new Cle(jeu), x-1,y);
+                    } else if(inventaire.getContenu(i) instanceof Coffre){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x-1,y);
+                        jeu.addEntiteStatique(new Coffre(jeu), x-1,y);
+                    } else if(inventaire.getContenu(i) instanceof Capsule){
+                        inventaire.removeItem(i);
+                        jeu.removeEntiteStatique(x-1,y);
+                        jeu.addEntiteStatique(new Capsule(jeu),x-1,y);
+                    }
+                }
+                break;
+        }
     }
 }

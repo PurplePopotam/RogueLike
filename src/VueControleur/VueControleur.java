@@ -3,6 +3,8 @@ package VueControleur;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +86,18 @@ public class VueControleur extends JFrame implements Observer {
                 }
             }
         });
+
+        //Ajoute un écouteur de souris pour chaque case de l'inventaire
+
+        for(int i = 0; i < jeu.getHeros().getInventaire().getTaille();i++){
+            int finalI = i;
+            tabJLabelInv[0][i].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    jeu.getHeros().deposer(finalI);
+                }
+            });
+        }
     }
 
 
@@ -95,7 +109,7 @@ public class VueControleur extends JFrame implements Observer {
         icoHeroS = chargerIcone("Images/Knight_South.png");
 
         //Icones cases
-        icoCaseNormale = chargerIcone("Images/Vide.png");
+        icoCaseNormale = chargerIcone("Images/CaseNormale.png");
         icoDalleUsageUnique = chargerIcone("Images/DalleUsageUnique.png");
         icoDalleUsageUnique_Enflammee = chargerIcone("Images/DalleUsageUnique_Enflammee.png");
         icoMur = chargerIcone("Images/Mur.png");

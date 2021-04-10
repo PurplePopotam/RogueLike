@@ -3,7 +3,7 @@ package modele.plateau;
 public class Coffre extends Pickup {
 
     private Pickup[] contenu;
-    private final int taille = 10;
+    private final int taille = 5;
 
     public Coffre(Jeu _jeu) { super(_jeu); contenu = new Pickup[taille];}
 
@@ -18,6 +18,10 @@ public class Coffre extends Pickup {
         contenu[0] = new Cle(jeu);
         contenu[1] = new Capsule(jeu);
         contenu[3] = new Coffre(jeu);
+    }
+
+    public Pickup getContenu(int i){
+        return contenu[i];
     }
 
     public void ajouter(Pickup p){

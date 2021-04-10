@@ -69,7 +69,10 @@ public class Jeu extends Observable implements Runnable {
                                 tirage = Math.random();
 
                                 if(tirage < spawnRateCoffre){
-                                    addEntiteStatique(new Coffre(this), x, y); break;
+                                    addEntiteStatique(new Coffre(this), x, y);
+                                    Coffre c = (Coffre)getEntite(x,y);
+                                    c.initialiserContenu();
+                                    break;
                                 }
                                 else if(tirage > spawnRateCoffre && tirage < spawnRateCoffre + spawnRateCapsule){
                                     addEntiteStatique(new Capsule(this), x, y); break;
@@ -89,6 +92,8 @@ public class Jeu extends Observable implements Runnable {
                                 break;
                             case "A":
                                 addEntiteStatique(new Coffre(this), x, y);
+                                Coffre c = (Coffre)getEntite(x,y);
+                                c.initialiserContenu();
                                 break;
                             case "B":
                                 addEntiteStatique(new Cle(this), x, y);

@@ -25,7 +25,8 @@ import modele.plateau.*;
  *
  */
 public class VueControleur extends JFrame implements Observer {
-    private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
+    private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement,
+    // permet de communiquer les actions clavier (ou souris)
 
     private int sizeX; // taille de la grille affichée
     private int sizeY;
@@ -36,7 +37,8 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoMur, icoPorte;     //Murs portes
     private ImageIcon icoCle, icoCapsule, icoCoffre;    //Pickups
     private ImageIcon icoCaseVide; //CaseVide
-    private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
+    private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône,
+                                    // suivant ce qui est présent dans le modèle)
 
     private ImageIcon icoCleInv, icoCapsuleInv, icoCoffreInv, icoVideInv;
 
@@ -44,16 +46,22 @@ public class VueControleur extends JFrame implements Observer {
     private int tailleInv;
     private JLabel[][] tabJLabelInv;    //cases graphiques pour l'inventaire
 
+    private JFrame coffre;
+    private int tailleCoffre = 5;
+    private JLabel[][] tabJLabelCoffre;     //cases graphiques pour les coffres
+
     public VueControleur(Jeu _jeu) {
         sizeX = jeu.SIZE_X;
         sizeY = _jeu.SIZE_Y;
         jeu = _jeu;
 
         inventaire = new JFrame("Inventaire");
+        coffre = new JFrame("Coffre");
 
         chargerLesIcones();
         placerLesComposantsGraphiques();
         ajouterEcouteurClavier();
+        ajouterEcouteurSouris();
     }
 
     private void ajouterEcouteurClavier() {
@@ -72,23 +80,58 @@ public class VueControleur extends JFrame implements Observer {
                                         else{
                                             inventaire.setVisible(false);
                                         } break;
-                    case KeyEvent.VK_T: jeu.getHeros().ramasser();
-                                        break;
+                    case KeyEvent.VK_T: jeu.getHeros().ramasser(); break;
+                    case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
+                                        if(jeu.getHeros().enFaceCoffre()){
+                                            if(!coffre.isVisible()){
+                                                coffre.setVisible(true);
+                                            }
+                                            else {
+                                                coffre.setVisible(false);
+                                            } break;
+                                        }
                 }
             }
         });
+
         //Pour la fenêtre d'inventaire
         inventaire.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
-                    case KeyEvent.VK_E: inventaire.setVisible(false);
+                    case KeyEvent.VK_E: inventaire.setVisible(false); break;
+                    case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
+                        if(!coffre.isVisible()){
+                            coffre.setVisible(true);
+                        }
+                        else {
+                            coffre.setVisible(false);
+                        } break;
                 }
             }
         });
 
-        //Ajoute un écouteur de souris pour chaque case de l'inventaire
+        //Pour la fenêtre coffre
+        coffre.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch(e.getKeyCode()){
+                    case KeyEvent.VK_O: coffre.setVisible(false); break;
+                    case KeyEvent.VK_E: if(!inventaire.isVisible()){
+                        inventaire.setVisible(true);
+                    }
+                    else{
+                        inventaire.setVisible(false);
+                    } break;
+                }
+            }
+        });
 
+
+    }
+
+    private void ajouterEcouteurSouris(){
+        //Ajoute un écouteur de souris pour chaque case de l'inventaire
         for(int i = 0; i < jeu.getHeros().getInventaire().getTaille();i++){
             int finalI = i;
             tabJLabelInv[0][i].addMouseListener(new MouseAdapter() {
@@ -98,8 +141,8 @@ public class VueControleur extends JFrame implements Observer {
                 }
             });
         }
-    }
 
+    }
 
     private void chargerLesIcones() {
         //Icones Heros
@@ -143,22 +186,33 @@ public class VueControleur extends JFrame implements Observer {
     private void placerLesComposantsGraphiques() {
         tailleInv = jeu.getHeros().getInventaire().getTaille();
 
+        //Initialisation fenêtre de jeu
         setTitle("Roguelike");
         setSize(20 * sizeX, 22 * sizeY); //taille de la fenêtre en fonction de la taille du jeu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
-
-        inventaire.setSize(tailleInv * 48,100);
-        inventaire.setLocationRelativeTo(this);
-        inventaire.setLocation(0, 22 * sizeY);
-        JComponent grilleJLabelsInv = new JPanel(new GridLayout(1, tailleInv));  //Grille avec le bon nombre de slots
-        grilleJLabelsInv.setBackground(Color.darkGray);
-
-        tabJLabelInv = new JLabel[1][tailleInv];
-
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
         grilleJLabels.setBackground(Color.black);//met la couleur du fond de la fenêtre en noir, plus adapté à un jeu de donjon
 
         tabJLabel = new JLabel[sizeX][sizeY];
+
+        //Initialisation fenêtre d'inventaire
+        inventaire.setSize(tailleInv * 48,100);
+        inventaire.setLocationRelativeTo(this);
+        inventaire.setLocation(0, 22 * sizeY);
+        JComponent grilleJLabelsInv = new JPanel(new GridLayout(1, tailleInv));  //Grille avec le bon nombre de slots pour l'inventaire
+        grilleJLabelsInv.setBackground(Color.darkGray);
+
+        tabJLabelInv = new JLabel[1][tailleInv];
+
+        //Initialisation fenêtre de coffre
+        coffre.setSize(tailleCoffre * 48, 100);
+        coffre.setLocationRelativeTo(this);
+        coffre.setLocation(tailleInv * 48, 22 * sizeY);
+        JComponent grilleJLabelsCoffre = new JPanel(new GridLayout(1, tailleCoffre));
+        grilleJLabelsCoffre.setBackground(Color.darkGray);
+
+        tabJLabelCoffre = new JLabel[1][tailleCoffre];
+
 
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
@@ -174,8 +228,15 @@ public class VueControleur extends JFrame implements Observer {
             grilleJLabelsInv.add(jlab);
         }
 
+        for(int y = 0; y < tailleCoffre; y++){
+            JLabel jlab = new JLabel();
+            tabJLabelCoffre[0][y] = jlab;
+            grilleJLabelsCoffre.add(jlab);
+        }
+
         add(grilleJLabels);
         inventaire.add(grilleJLabelsInv);
+        coffre.add(grilleJLabelsCoffre);
     }
 
     
@@ -266,8 +327,34 @@ public class VueControleur extends JFrame implements Observer {
 
         }
     }
+
+    public void mettreAJourAffichageCoffre(){
+        if(jeu.getHeros().getCoffreActif() != null){
+            for(int y = 0; y < tailleCoffre; y++){
+                Pickup p = jeu.getHeros().getCoffreActif().getContenu(y);
+                if(p instanceof Capsule){
+                    tabJLabelCoffre[0][y].setIcon(icoCapsuleInv);
+                }
+                else if (p instanceof Cle){
+                    tabJLabelCoffre[0][y].setIcon(icoCleInv);
+                }
+                else if (p instanceof Coffre){
+                    tabJLabelCoffre[0][y].setIcon(icoCoffreInv);
+                }
+                else{
+                    tabJLabelCoffre[0][y].setIcon(icoVideInv);
+                }
+            }
+        }
+        else{
+            for(int y = 0; y < tailleCoffre; y++){
+                tabJLabelCoffre[0][y].setIcon(icoVideInv);
+            }
+        }
+    }
     @Override
     public void update(Observable o, Object arg) {
+        mettreAJourAffichageCoffre();
         mettreAJourAffichageNiveau();
         mettreAJourAffichageInventaire();
         mettreAJourAffichageHeros();

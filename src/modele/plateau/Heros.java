@@ -21,6 +21,8 @@ public class Heros {
 
     private Inventaire inventaire;
 
+    private Coffre coffreActif;
+
     public int getX() {
         return x;
     }
@@ -36,6 +38,8 @@ public class Heros {
     public Inventaire getInventaire() {
         return inventaire;
     }
+
+    public Coffre getCoffreActif(){return coffreActif;}
 
     public Heros(Jeu _jeu, int _x, int _y) {
         jeu = _jeu;
@@ -111,6 +115,7 @@ public class Heros {
 
     public void traverserPorte(int _x, int _y){
         EntiteStatique e = jeu.getEntite(_x,_y);
+
         if(e instanceof Porte && ((Porte) e).getJumelle() != null){
             Porte dest = ((Porte) e).getJumelle();
             switch (dest.getDirection()){
@@ -233,6 +238,67 @@ public class Heros {
                         jeu.removeEntiteStatique(x-1,y);
                         jeu.addEntiteStatique(new Capsule(jeu),x-1,y);
                     }
+                }
+                break;
+        }
+    }
+
+    public boolean enFaceCoffre(){
+        EntiteStatique e;
+        switch (orientation){
+            case 'n':
+                e = jeu.getEntite(x, y-1);
+                if(e instanceof Coffre){
+                    return true;
+                }
+                break;
+            case 'e':
+                e = jeu.getEntite(x+1, y);
+                if(e instanceof Coffre){
+                    return true;
+                }
+                break;
+            case 's':
+                e = jeu.getEntite(x, y+1 );
+                if(e instanceof Coffre){
+                    return true;
+                }
+                break;
+            case 'w':
+                e = jeu.getEntite(x-1, y);
+                if(e instanceof Coffre){
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    public void setCoffreActif(){
+        EntiteStatique e;
+        switch (orientation){
+            case 'n':
+                e = jeu.getEntite(x, y-1);
+                if(e instanceof Coffre){
+                    coffreActif = (Coffre)e;
+                }
+                break;
+            case 'e':
+                e = jeu.getEntite(x+1, y);
+                if(e instanceof Coffre){
+                    coffreActif = (Coffre)e;
+                }
+                break;
+            case 's':
+                e = jeu.getEntite(x, y+1 );
+                if(e instanceof Coffre){
+                    coffreActif = (Coffre)e;
+                }
+                break;
+            case 'w':
+                e = jeu.getEntite(x-1, y);
+                if(e instanceof Coffre){
+                    coffreActif = (Coffre)e;
                 }
                 break;
         }

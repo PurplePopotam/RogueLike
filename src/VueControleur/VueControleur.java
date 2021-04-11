@@ -28,8 +28,8 @@ public class VueControleur extends JFrame implements Observer {
     private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement,
     // permet de communiquer les actions clavier (ou souris)
 
-    private int sizeX; // taille de la grille affichée
-    private int sizeY;
+    private final int sizeX; // taille de la grille affichée
+    private final int sizeY;
 
     // icones affichées dans la grille
     private ImageIcon icoHeroN, icoHeroE, icoHeroW, icoHeroS;   //Heros
@@ -47,11 +47,11 @@ public class VueControleur extends JFrame implements Observer {
     private JLabel[][] tabJLabelInv;    //cases graphiques pour l'inventaire
 
     private JFrame coffre;
-    private int tailleCoffre = 5;
+    private final int tailleCoffre = 5;
     private JLabel[][] tabJLabelCoffre;     //cases graphiques pour les coffres
 
     public VueControleur(Jeu _jeu) {
-        sizeX = jeu.SIZE_X;
+        sizeX = _jeu.SIZE_X;
         sizeY = _jeu.SIZE_Y;
         jeu = _jeu;
 
@@ -74,22 +74,15 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_RIGHT : jeu.getHeros().droite();break;
                     case KeyEvent.VK_DOWN : jeu.getHeros().bas(); break;
                     case KeyEvent.VK_UP : jeu.getHeros().haut(); break;
-                    case KeyEvent.VK_E: if(!inventaire.isVisible()){
-                                             inventaire.setVisible(true);
-                                         }
-                                        else{
-                                            inventaire.setVisible(false);
-                                        } break;
+                    case KeyEvent.VK_E:
+                        inventaire.setVisible(!inventaire.isVisible());
+                        break;
                     case KeyEvent.VK_T: jeu.getHeros().ramasser(); break;
                     case KeyEvent.VK_L: jeu.getHeros().LancerCapsule(); break;
                     case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
                                         if(jeu.getHeros().enFaceCoffre()){
-                                            if(!coffre.isVisible()){
-                                                coffre.setVisible(true);
-                                            }
-                                            else {
-                                                coffre.setVisible(false);
-                                            } break;
+                                            coffre.setVisible(!coffre.isVisible());
+                                            break;
                                         }
                 }
             }
@@ -102,12 +95,8 @@ public class VueControleur extends JFrame implements Observer {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_E: inventaire.setVisible(false); break;
                     case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
-                        if(!coffre.isVisible() && jeu.getHeros().enFaceCoffre()){
-                            coffre.setVisible(true);
-                        }
-                        else {
-                            coffre.setVisible(false);
-                        } break;
+                        coffre.setVisible(!coffre.isVisible() && jeu.getHeros().enFaceCoffre());
+                        break;
                 }
             }
         });
@@ -118,12 +107,9 @@ public class VueControleur extends JFrame implements Observer {
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyCode()){
                     case KeyEvent.VK_O: coffre.setVisible(false); break;
-                    case KeyEvent.VK_E: if(!inventaire.isVisible()){
-                        inventaire.setVisible(true);
-                    }
-                    else{
-                        inventaire.setVisible(false);
-                    } break;
+                    case KeyEvent.VK_E:
+                        inventaire.setVisible(!inventaire.isVisible());
+                        break;
                 }
             }
         });
@@ -160,6 +146,7 @@ public class VueControleur extends JFrame implements Observer {
                     if(!jeu.getHeros().getInventaire().isFull()) {
                         jeu.getHeros().getInventaire().addItem(jeu.getHeros().getCoffreActif().getContenu(finalI3));
                         jeu.getHeros().getCoffreActif().removeItem(finalI3);
+
                     }
                 }
             });
@@ -193,7 +180,7 @@ public class VueControleur extends JFrame implements Observer {
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
-        BufferedImage image = null;
+        BufferedImage image;
 
         try {
             image = ImageIO.read(new File(urlIcone));

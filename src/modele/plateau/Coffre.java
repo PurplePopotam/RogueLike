@@ -4,6 +4,9 @@ public class Coffre extends Pickup {
 
     private Pickup[] contenu;
     private final int taille = 5;
+    private final double spawnRateCle = 0.3f;
+    private final double spawnRateCoffre = 0.1f;
+    private final double spawnRateCapsule = 0.2f;
 
     public Coffre(Jeu _jeu) { super(_jeu); contenu = new Pickup[taille];}
 
@@ -13,11 +16,21 @@ public class Coffre extends Pickup {
     }
 
     public void initialiserContenu(){
-        /*TO DO : Faire en sorte que le contenu soit aléatoire*/
-        /*Pour le moment toujours le même contenu.*/
-        contenu[0] = new Cle(jeu);
-        contenu[1] = new Capsule(jeu);
-        contenu[3] = new Coffre(jeu);
+
+        double tirage;
+
+        for(int i = 0; i < taille; i++){
+            tirage = Math.random();
+            if(tirage < spawnRateCoffre){
+                contenu[i] = new Coffre(jeu);
+            }
+            else if(tirage > spawnRateCoffre && tirage < spawnRateCapsule + spawnRateCoffre){
+                contenu[i] = new Capsule(jeu);
+            }
+            else if(tirage > spawnRateCoffre + spawnRateCapsule && tirage < spawnRateCapsule + spawnRateCle + spawnRateCoffre){
+                contenu[i] = new Cle(jeu);
+            }
+        }
     }
 
     public Pickup getContenu(int i){

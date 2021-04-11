@@ -127,8 +127,6 @@ public class VueControleur extends JFrame implements Observer {
                 }
             }
         });
-
-
     }
 
     private void ajouterEcouteurSouris(){

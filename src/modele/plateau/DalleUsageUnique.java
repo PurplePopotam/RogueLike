@@ -2,7 +2,7 @@ package modele.plateau;
 
 public class DalleUsageUnique extends EntiteStatique {
 
-    private boolean enflammee = false;
+    private static boolean enflammee = false;
 
     public DalleUsageUnique(Jeu _jeu){super(_jeu);}
 
@@ -15,11 +15,11 @@ public class DalleUsageUnique extends EntiteStatique {
         else return false;
     }
 
-    public boolean isEnflammee() {
+    public static boolean isEnflammee() {
         return enflammee;
     }
 
-    public void setEnflammee(boolean enflammee) {
-        this.enflammee = enflammee;
+    public static void setEnflammee(boolean enflammee) {
+       enflammee = enflammee;
     }
 }

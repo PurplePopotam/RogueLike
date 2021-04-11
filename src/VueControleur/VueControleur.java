@@ -81,6 +81,7 @@ public class VueControleur extends JFrame implements Observer {
                                             inventaire.setVisible(false);
                                         } break;
                     case KeyEvent.VK_T: jeu.getHeros().ramasser(); break;
+                    case KeyEvent.VK_L: jeu.getHeros().LancerCapsule(); break;
                     case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
                                         if(jeu.getHeros().enFaceCoffre()){
                                             if(!coffre.isVisible()){

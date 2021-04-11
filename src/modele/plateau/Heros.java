@@ -303,4 +303,65 @@ public class Heros {
                 break;
         }
     }
+    public int PossedeCapsule(){
+        for (int i = 0; i < getInventaire().getTaille(); i++){
+            if(getInventaire().getContenu(i) instanceof Capsule){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void LancerCapsule(){
+
+        EntiteStatique e;
+        int i = PossedeCapsule();
+        switch(orientation){
+            case 'n':
+                e = jeu.getEntite(x,y-1);
+                if(e instanceof DalleUsageUnique && DalleUsageUnique.isEnflammee()){
+                    if(i > -1){
+                        inventaire.removeItem(i);
+                        DalleUsageUnique.setEnflammee(false);
+                        jeu.removeEntiteStatique(x, y-1);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                    }
+                }
+                break;
+            case 'e':
+                e = jeu.getEntite(x+1,y);
+                if(e instanceof DalleUsageUnique && DalleUsageUnique.isEnflammee()){
+                    if(i > -1){
+                        inventaire.removeItem(i);
+                        DalleUsageUnique.setEnflammee(false);
+                        jeu.removeEntiteStatique(x+1, y);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                    }
+                }
+                break;
+            case 's':
+                e = jeu.getEntite(x,y+1);
+                if(e instanceof DalleUsageUnique && DalleUsageUnique.isEnflammee()){
+                    if(i > -1){
+                        inventaire.removeItem(i);
+                        DalleUsageUnique.setEnflammee(false);
+                        jeu.removeEntiteStatique(x, y+1);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                    }
+                }
+                break;
+            case 'w':
+                e = jeu.getEntite(x-1,y);
+                if(e instanceof DalleUsageUnique && DalleUsageUnique.isEnflammee()){
+                    if(i > -1){
+                        inventaire.removeItem(i);
+                        DalleUsageUnique.setEnflammee(false);
+                        jeu.removeEntiteStatique(x-1, y);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                    }
+                }
+                break;
+        }
+
+
+    }
 }

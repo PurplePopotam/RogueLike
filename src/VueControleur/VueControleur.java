@@ -162,7 +162,7 @@ public class VueControleur extends JFrame implements Observer {
         //Icones Pickups
         icoCle = chargerIcone("Images/Clef.png");
         icoCoffre = chargerIcone("Images/Coffre.png");
-        icoCapsule = chargerIcone("Images/capsule.png");
+        icoCapsule = chargerIcone("Images/Capsule.png");
 
         //Icones Pickups inventaire
         icoCapsuleInv = chargerIcone("Images/CapsuleInv.png");

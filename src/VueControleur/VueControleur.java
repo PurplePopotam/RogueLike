@@ -102,7 +102,7 @@ public class VueControleur extends JFrame implements Observer {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_E: inventaire.setVisible(false); break;
                     case KeyEvent.VK_O: jeu.getHeros().setCoffreActif();
-                        if(!coffre.isVisible()){
+                        if(!coffre.isVisible() && jeu.getHeros().enFaceCoffre()){
                             coffre.setVisible(true);
                         }
                         else {
@@ -130,17 +130,40 @@ public class VueControleur extends JFrame implements Observer {
     }
 
     private void ajouterEcouteurSouris(){
-        //Ajoute un écouteur de souris pour chaque case de l'inventaire
-        for(int i = 0; i < jeu.getHeros().getInventaire().getTaille();i++){
-            int finalI = i;
-            tabJLabelInv[0][i].addMouseListener(new MouseAdapter() {
+
+        //Ecouteur inventaire
+
+        if(!coffre.isVisible()){
+            for(int i = 0; i < jeu.getHeros().getInventaire().getTaille();i++){
+                int finalI = i;
+                tabJLabelInv[0][i].addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if(coffre.isVisible()){
+                            jeu.getHeros().getCoffreActif().addItem(jeu.getHeros().getInventaire().getContenu(finalI));
+                            jeu.getHeros().getInventaire().removeItem(finalI);
+                        }
+                        else{
+                            jeu.getHeros().deposer(finalI);
+                        }
+                    }
+                });
+            }
+        }
+
+        //Ecouteur coffre
+        for(int i = 0; i < 5;i++){
+            int finalI3 = i;
+            tabJLabelCoffre[0][i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    jeu.getHeros().deposer(finalI);
+                    if(!jeu.getHeros().getInventaire().isFull()) {
+                        jeu.getHeros().getInventaire().addItem(jeu.getHeros().getCoffreActif().getContenu(finalI3));
+                        jeu.getHeros().getCoffreActif().removeItem(finalI3);
+                    }
                 }
             });
         }
-
     }
 
     private void chargerLesIcones() {

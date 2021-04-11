@@ -5,6 +5,8 @@
  */
 package modele.plateau;
 
+import com.sun.javafx.font.CompositeFontResource;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -46,6 +48,7 @@ public class Heros {
         x = _x;
         y = _y;
         inventaire = new Inventaire(jeu);
+        coffreActif = new Coffre(jeu);
     }
 
     public void droite() {
@@ -133,33 +136,69 @@ public class Heros {
             case 'n':
                 e = jeu.getEntite(x,y-1);
                 if(e instanceof Pickup && !inventaire.isFull()){
-                    inventaire.addItem((Pickup) e);
-                    jeu.removeEntiteStatique(x, y-1);
-                    jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                    if(e instanceof Coffre){
+                        if(((Coffre) e).isEmpty()){
+                            inventaire.addItem((Pickup) e);
+                            jeu.removeEntiteStatique(x, y-1);
+                            jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                        }
+                    }
+                    else{
+                        inventaire.addItem((Pickup) e);
+                        jeu.removeEntiteStatique(x, y-1);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                    }
                 }
                 break;
             case 'e':
                 e = jeu.getEntite(x+1,y);
                 if(e instanceof Pickup && !inventaire.isFull()){
-                    inventaire.addItem((Pickup) e);
-                    jeu.removeEntiteStatique(x+1, y);
-                    jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                    if(e instanceof Coffre){
+                        if(((Coffre) e).isEmpty()){
+                            inventaire.addItem((Pickup) e);
+                            jeu.removeEntiteStatique(x+1, y);
+                            jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                        }
+                    }
+                    else{
+                        inventaire.addItem((Pickup) e);
+                        jeu.removeEntiteStatique(x+1, y);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                    }
                 }
                 break;
             case 's':
                 e = jeu.getEntite(x,y+1);
                 if(e instanceof Pickup && !inventaire.isFull()){
-                    inventaire.addItem((Pickup) e);
-                    jeu.removeEntiteStatique(x, y+1);
-                    jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                    if(e instanceof Coffre){
+                        if(((Coffre) e).isEmpty()){
+                            inventaire.addItem((Pickup) e);
+                            jeu.removeEntiteStatique(x, y+1);
+                            jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                        }
+                    }
+                    else{
+                        inventaire.addItem((Pickup) e);
+                        jeu.removeEntiteStatique(x, y+1);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                    }
                 }
                 break;
             case 'w':
                 e = jeu.getEntite(x-1,y);
                 if(e instanceof Pickup && !inventaire.isFull()){
-                    inventaire.addItem((Pickup) e);
-                    jeu.removeEntiteStatique(x-1, y);
-                    jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                    if(e instanceof Coffre){
+                        if(((Coffre) e).isEmpty()){
+                            inventaire.addItem((Pickup) e);
+                            jeu.removeEntiteStatique(x-1, y);
+                            jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                        }
+                    }
+                    else{
+                        inventaire.addItem((Pickup) e);
+                        jeu.removeEntiteStatique(x-1, y);
+                        jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                    }
                 }
                 break;
         }
@@ -176,9 +215,17 @@ public class Heros {
                         jeu.removeEntiteStatique(x, y-1);
                         jeu.addEntiteStatique(new Cle(jeu), x, y-1);
                     } else if(inventaire.getContenu(i) instanceof Coffre){
-                        inventaire.removeItem(i);
-                        jeu.removeEntiteStatique(x, y-1);
-                        jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
+                        if(((Coffre)inventaire.getContenu(i)).isEmpty()){
+                            inventaire.removeItem(i);
+                            jeu.removeEntiteStatique(x, y-1);
+                            jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
+                        }
+                        else{
+                            jeu.removeEntiteStatique(x, y-1);
+                            jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
+                            inventaire.removeItem(i);
+                        }
+
                     } else if(inventaire.getContenu(i) instanceof Capsule){
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x, y-1);

@@ -117,6 +117,13 @@ public class Heros {
         EntiteStatique e = jeu.getEntite(_x,_y);
 
         if(e instanceof Porte && ((Porte) e).getJumelle() != null){
+            if(((Porte) e).isTraversee() != true ){
+                enleverCapsule();
+                rechargerCapsule();
+                ((Porte) e).setTraversee(true);
+
+            }
+
             Porte dest = ((Porte) e).getJumelle();
             switch (dest.getDirection()){
                 case 'n':
@@ -417,5 +424,22 @@ public class Heros {
         }
 
 
+    }
+    public void enleverCapsule(){
+        for(int i = 0; i < getInventaire().getTaille(); i++){
+            if(getInventaire().getContenu(i) instanceof Capsule){
+                getInventaire().removeItem(i);
+
+            }
+        }
+    }
+    public void rechargerCapsule(){
+        int capsuleposee = 0;
+        for(int i = 0; i < getInventaire().getTaille(); i++){
+            if(getInventaire().getContenu(i) == null && capsuleposee < 3){
+                capsuleposee++;
+                getInventaire().addItem(new Capsule(jeu));
+            }
+        }
     }
 }

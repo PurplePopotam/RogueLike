@@ -119,10 +119,26 @@ public class Heros {
         if(e instanceof Porte && ((Porte) e).getJumelle() != null){
             Porte dest = ((Porte) e).getJumelle();
             switch (dest.getDirection()){
-                case 'n': x = dest.getX(); y = dest.getY() + 1; break;
-                case 's': x = dest.getX(); y = dest.getY() - 1; break;
-                case 'e': x = dest.getX() - 1; y = dest.getY(); break;
-                case 'w': x = dest.getX() + 1; y = dest.getY(); break;
+                case 'n':
+                    x = dest.getX(); y = dest.getY() + 1;
+                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()+1);
+                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    break;
+                case 's':
+                    x = dest.getX(); y = dest.getY() - 1;
+                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()-1);
+                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    break;
+                case 'e':
+                    x = dest.getX() - 1; y = dest.getY();
+                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()-1);
+                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    break;
+                case 'w':
+                    x = dest.getX() + 1; y = dest.getY();
+                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()+1);
+                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    break;
             }
         }
     }

@@ -16,23 +16,37 @@ public class Jeu extends Observable implements Runnable {
 
     public static final int SIZE_X = 30;    //On règle ici la taille maximum des salles
     public static final int SIZE_Y = 20;
-
+    public static final int nbNiveau = 1;
     private int pause = 200; // période de rafraichissement
 
-    private final double spawnRateCoffre = 0.008;
-    private final double spawnRateCle = 0.008;
-    private final double spawnRateCapsule = 0.01;
+    public final double spawnRateCoffre = 0.004;
+    public final double spawnRateCle = 0.004;
+    public final double spawnRateCapsule = 0.01;
 
     private Heros heros;
-
+    private Niveau[] niveaux;
+    private int indSalleCourante = 0;
+    private int indNiveauCourant = 0;
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
-        initialisationDesEntites("Maps/Map.txt");
+        niveaux = new Niveau[1];
+        niveaux[0] = new Niveau(this, "Maps/Niveau_1.txt");
+        niveaux[0].initialiserSalles();
+        chargerSalle(niveaux[0].getSalle(0));
+        placerHeros(15, 10);
     }
 
     public Heros getHeros() {
         return heros;
+    }
+
+    public int getIndSalleCourante() {
+        return indSalleCourante;
+    }
+
+    public void setIndSalleCourante(int indSalleCourante) {
+        this.indSalleCourante = indSalleCourante;
     }
 
     public EntiteStatique[][] getGrille() {
@@ -46,6 +60,10 @@ public class Jeu extends Observable implements Runnable {
 		}
 		return grilleEntitesStatiques[x][y];
 	}
+
+	public Niveau getNiveau(int i){
+        return niveaux[i];
+    }
 
     private void initialisationDesEntites(String path) {
 
@@ -125,12 +143,24 @@ public class Jeu extends Observable implements Runnable {
         }
 
         //Entités particulières qui ont besoin d'être initialisées à part ou besoin d'autres initialisation
-        heros = new Heros(this, 10, 4);
+        heros = new Heros(this, 15, 10);
         addEntiteStatique(new CaseNormale(this), 10, 4);    //Pour être sûr qu'il n'y est pas de pickup sous le joueur en début de partie
 
-        Porte porte1 = (Porte)this.getEntite(19,4);
+        Porte porte1 = (Porte)this.getEntite(28,9);
         porte1.setDirection('e');
 
+    }
+
+    public void chargerSalle(Salle s){
+        for(int x = 0; x < SIZE_X; x++){
+            for(int y = 0; y < SIZE_Y; y++){
+                grilleEntitesStatiques[x][y] = s.getEntiteStatique(x,y);
+            }
+        }
+    }
+
+    private void placerHeros(int x, int y){
+        heros = new Heros(this, x , y);
     }
 
     public void start() {

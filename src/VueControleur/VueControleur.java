@@ -280,6 +280,8 @@ public class VueControleur extends JFrame implements Observer {
                     }
                 } else if (e instanceof CaseVide){
                     tabJLabel[x][y].setIcon(icoCaseVide);
+                } else {
+                    tabJLabel[x][y].setIcon(null);
                 }
             }
         }

@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
+import modele.entites.*;
 import modele.plateau.*;
 
 

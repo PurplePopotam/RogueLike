@@ -1,4 +1,6 @@
-package modele.plateau;
+package modele.entites;
+
+import modele.plateau.Jeu;
 
 /**
  * Ne bouge pas (murs...)

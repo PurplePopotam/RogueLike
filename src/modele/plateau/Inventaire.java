@@ -1,5 +1,7 @@
 package modele.plateau;
 
+import modele.entites.Pickup;
+
 public class Inventaire {
 
     private Pickup[] contenu;

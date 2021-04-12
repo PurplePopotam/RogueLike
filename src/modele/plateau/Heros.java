@@ -5,10 +5,7 @@
  */
 package modele.plateau;
 
-import com.sun.javafx.font.CompositeFontResource;
-
-import javax.swing.*;
-import java.awt.*;
+import modele.entites.*;
 
 /**
  * Héros du jeu

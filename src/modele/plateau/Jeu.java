@@ -5,6 +5,8 @@
  */
 package modele.plateau;
 
+import modele.entites.*;
+
 import java.util.Observable;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,8 +14,8 @@ import java.util.Scanner;
 
 public class Jeu extends Observable implements Runnable {
 
-    public static final int SIZE_X = 60;    //On règle ici la taille du niveau
-    public static final int SIZE_Y = 30;
+    public static final int SIZE_X = 30;    //On règle ici la taille maximum des salles
+    public static final int SIZE_Y = 20;
 
     private int pause = 200; // période de rafraichissement
 
@@ -26,7 +28,7 @@ public class Jeu extends Observable implements Runnable {
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
-        initialisationDesEntites("Images/Map.txt");
+        initialisationDesEntites("Maps/Map.txt");
     }
 
     public Heros getHeros() {
@@ -127,27 +129,7 @@ public class Jeu extends Observable implements Runnable {
         addEntiteStatique(new CaseNormale(this), 10, 4);    //Pour être sûr qu'il n'y est pas de pickup sous le joueur en début de partie
 
         Porte porte1 = (Porte)this.getEntite(19,4);
-        Porte porte2 = (Porte)this.getEntite(6,13);
-        Porte porte3 = (Porte)this.getEntite(14,16);
-        Porte porte4 = (Porte)this.getEntite(25,3);
-        Porte porte5 = (Porte)this.getEntite(31,11);
-        Porte porte6 = (Porte)this.getEntite(29,22);
-
         porte1.setDirection('e');
-        porte2.setDirection('n');
-        porte3.setDirection('e');
-        porte4.setDirection('w');
-        porte5.setDirection('s');
-        porte6.setDirection('w');
-
-        porte1.setJumelle(porte2);
-        porte2.setJumelle(porte1);
-
-        porte3.setJumelle(porte4);
-        porte4.setJumelle(porte3);
-
-        porte5.setJumelle(porte6);
-        porte6.setJumelle(porte5);
 
     }
 
@@ -171,7 +153,6 @@ public class Jeu extends Observable implements Runnable {
         }
 
     }
-
 
     public void addEntiteStatique(EntiteStatique e, int x, int y) {
         try {

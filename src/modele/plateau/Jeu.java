@@ -37,7 +37,7 @@ public class Jeu extends Observable implements Runnable {
         niveaux = new Niveau[1];
         niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
         chargerSalle(niveaux[0].getSalle(1, 1));
-        placerHeros(15, 10);
+        placerHeros(15, 9);
     }
 
     public Heros getHeros() {
@@ -77,92 +77,6 @@ public class Jeu extends Observable implements Runnable {
     }
 
     public int getIndNiveauCourant(){return indNiveauCourant;}
-
-    private void initialisationDesEntites(String path) {
-
-        double tirage = 0f;
-        /*Permet de lire une carte depuis un fichier .txt,
-          la génération de niveau est donc pour le moment très simplifiée.
-          ATTENTION la carte doit faire la même taille que le jeu (SIZE_X,SIZE_Y)
-          sinon le comportement est complètement erronné.
-         */
-
-        try{
-            File map = new File(path);
-            Scanner myReader = new Scanner(map);
-
-            for(int y = 0; y < SIZE_Y;y++) {
-                for (int x = 0; x < SIZE_X; x++) {
-                    if (myReader.hasNext()) {
-
-                        String s = myReader.next();
-
-                        switch (s) {
-                            case "_":
-                                tirage = Math.random();
-
-                                if(tirage < spawnRateCoffre){
-                                    addEntiteStatique(new Coffre(this), x, y);
-                                    Coffre c = (Coffre)getEntite(x,y);
-                                    c.initialiserContenu();
-                                    break;
-                                }
-                                else if(tirage > spawnRateCoffre && tirage < spawnRateCoffre + spawnRateCapsule){
-                                    addEntiteStatique(new Capsule(this), x, y); break;
-                                }
-                                else if(tirage > spawnRateCoffre + spawnRateCapsule && tirage < spawnRateCapsule + spawnRateCle + spawnRateCoffre){
-                                    addEntiteStatique(new Cle(this), x, y); break;
-                                }
-                                else{
-                                    addEntiteStatique(new CaseNormale(this), x, y);
-                                    break;
-                                }
-                            case "M":
-                                addEntiteStatique(new Mur(this), x, y);
-                                break;
-                            case "P":
-                                addEntiteStatique(new Porte(this, x, y), x, y);
-                                break;
-                            case "A":
-                                addEntiteStatique(new Coffre(this), x, y);
-                                Coffre c = (Coffre)getEntite(x,y);
-                                c.initialiserContenu();
-                                break;
-                            case "B":
-                                addEntiteStatique(new Cle(this), x, y);
-                                break;
-                            case "C":
-                                addEntiteStatique(new Capsule(this), x, y);
-                                break;
-                            case "D":
-                                addEntiteStatique(new DalleUsageUnique(this), x, y);
-                                break;
-                            case "V":
-                                addEntiteStatique(new CaseVide(this), x, y);
-                                break;
-                            case ".":
-                                break;
-
-                        }
-                    }
-
-                }
-            }
-
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Erreur, la map n'a pas été trouvée.");
-            e.printStackTrace();
-        }
-
-        //Entités particulières qui ont besoin d'être initialisées à part ou besoin d'autres initialisation
-        heros = new Heros(this, 15, 10);
-        addEntiteStatique(new CaseNormale(this), 10, 4);    //Pour être sûr qu'il n'y est pas de pickup sous le joueur en début de partie
-
-        Porte porte1 = (Porte)this.getEntite(28,9);
-        porte1.setDirection('e');
-
-    }
 
     public void chargerSalle(Salle s){
         for(int x = 0; x < SIZE_X; x++){

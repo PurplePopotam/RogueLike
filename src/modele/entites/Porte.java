@@ -4,7 +4,7 @@ import modele.plateau.Jeu;
 
 public class Porte extends EntiteStatique {
 
-    private boolean Verouillee = false;
+    private boolean Verouillee = true;
     private boolean Traversee = false;
     private Porte jumelle;
     private char direction = 'e';

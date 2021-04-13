@@ -39,34 +39,28 @@ public class Niveau {
                             case "D":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/Debut.txt");
                                 salles[x][y].addPorteEast();
-                                System.out.println("Créé : Salle Début");
                                 break;
                             case "F":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/Fin.txt");
                                 salles[x][y].addPorteWest();
-                                System.out.println("Créé : Salle Fin");
                                 break;
                             case "E":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleE.txt");
                                 salles[x][y].addPorteEast();
-                                System.out.println("Créé : Salle E");
                                 break;
                             case "ES":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleES.txt");
                                 salles[x][y].addPorteEast();
                                 salles[x][y].addPorteSouth();
-                                System.out.println("Créé : Salle ES");
                                 break;
                             case "N":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleN.txt");
                                 salles[x][y].addPorteNorth();
-                                System.out.println("Créé : Salle N");
                                 break;
                             case "NE":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleNE.txt");
                                 salles[x][y].addPorteNorth();
                                 salles[x][y].addPorteEast();
-                                System.out.println("Créé : Salle NE");
                                 break;
                             case "NSEW":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleNSEW.txt");
@@ -74,41 +68,34 @@ public class Niveau {
                                 salles[x][y].addPorteEast();
                                 salles[x][y].addPorteSouth();
                                 salles[x][y].addPorteWest();
-                                System.out.println("Créé : Salle NSEW");
                                 break;
                             case "NS":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleNS.txt");
                                 salles[x][y].addPorteNorth();
                                 salles[x][y].addPorteSouth();
-                                System.out.println("Créé : Salle NS");
                                 break;
                             case "S":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleS.txt");
                                 salles[x][y].addPorteSouth();
-                                System.out.println("Créé : Salle S");
                                 break;
                             case "W":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleW.txt");
                                 salles[x][y].addPorteWest();
-                                System.out.println("Créé : Salle W");
                                 break;
                             case "WE":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleWE.txt");
                                 salles[x][y].addPorteWest();
                                 salles[x][y].addPorteEast();
-                                System.out.println("Créé : Salle WE");
                                 break;
                             case "WN":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleWN.txt");
                                 salles[x][y].addPorteNorth();
                                 salles[x][y].addPorteWest();
-                                System.out.println("Créé : Salle WN");
                                 break;
                             case "WS":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleWS.txt");
                                 salles[x][y].addPorteWest();
                                 salles[x][y].addPorteSouth();
-                                System.out.println("Créé : Salle WS");
                                 break;
                             case ".":
                                 salles[x][y] = null;

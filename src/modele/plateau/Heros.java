@@ -114,40 +114,78 @@ public class Heros {
     }
 
     public void traverserPorte(int _x, int _y){
-        EntiteStatique e = jeu.getEntite(_x,_y);
+        Porte e = (Porte)jeu.getEntite(_x,_y);
 
-        if(e instanceof Porte && ((Porte) e).getJumelle() != null){
-            if(((Porte) e).isTraversee() != true ){
-                enleverCapsule();
-                rechargerCapsule();
-                ((Porte) e).setTraversee(true);
+        if(e.getJumelle() != null) {
+            if ((e.isVerouillee())) {
+                if (getInventaire().hasKey() != -1) {
 
-            }
+                    getInventaire().removeItem(getInventaire().hasKey());
+                    e.setVerouillee(false);
+                    e.getJumelle().setVerouillee(false);
 
-            Porte dest = ((Porte) e).getJumelle();
-            switch (dest.getDirection()){
-                case 'n':
-                    x = dest.getX(); y = dest.getY() + 1;
-                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 's':
-                    x = dest.getX(); y = dest.getY() - 1;
-                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 'e':
-                    x = dest.getX() - 1; y = dest.getY();
-                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 'w':
-                    x = dest.getX() + 1; y = dest.getY();
-                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
+                    if (e.isTraversee() != true) {
+                        enleverCapsule();
+                        rechargerCapsule();
+                        e.setTraversee(true);
+
+                    }
+
+                    Porte dest = e.getJumelle();
+                    switch (dest.getDirection()){
+                        case 'n':
+                            x = dest.getX(); y = dest.getY() + 1;
+                            jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 's':
+                            x = dest.getX(); y = dest.getY() - 1;
+                            jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 'e':
+                            x = dest.getX() - 1; y = dest.getY();
+                            jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 'w':
+                            x = dest.getX() + 1; y = dest.getY();
+                            jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+
+                    }
+                }
+            } else{
+                Porte dest = e.getJumelle();
+                switch (dest.getDirection()){
+                    case 'n':
+                        x = dest.getX(); y = dest.getY() + 1;
+                        jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 's':
+                        x = dest.getX(); y = dest.getY() - 1;
+                        jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 'e':
+                        x = dest.getX() - 1; y = dest.getY();
+                        jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 'w':
+                        x = dest.getX() + 1; y = dest.getY();
+                        jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+
+                }
             }
         }
+
+
+
     }
 
     public void ramasser(){

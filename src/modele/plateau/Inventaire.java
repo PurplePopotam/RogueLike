@@ -1,6 +1,6 @@
 package modele.plateau;
 
-import modele.entites.Pickup;
+import modele.entites.*;
 
 public class Inventaire {
 
@@ -52,6 +52,15 @@ public class Inventaire {
 
     public void removeItem(int i){
         contenu[i] = null;
+    }
+
+    public int hasKey(){
+        for(int i = 0; i < taille; i++){
+            if(contenu[i] instanceof Cle){
+                return i;
+            }
+        }
+        return -1;
     }
 }
 

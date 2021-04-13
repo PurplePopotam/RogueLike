@@ -1,5 +1,8 @@
 package modele.plateau;
 
+import modele.entites.Porte;
+import modele.entites.PorteFinale;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -37,9 +40,25 @@ public class Niveau {
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/Debut.txt");
                                 salles[x][y].addPorteEast();
                                 break;
-                            case "F":
-                                salles[x][y] = new Salle(jeu, "Maps/Salles/Fin.txt");
+                            case "FE":
+                                salles[x][y] = new Salle(jeu, "Maps/Salles/FinE.txt");
+                                salles[x][y].addPorteEast();
+                                salles[x][y].addPorteFinaleWest();
+                                break;
+                            case "FN":
+                                salles[x][y] = new Salle(jeu, "Maps/Salles/FinN.txt");
+                                salles[x][y].addPorteNorth();
+                                salles[x][y].addPorteFinaleeSouth();
+                                break;
+                            case "FW":
+                                salles[x][y] = new Salle(jeu, "Maps/Salles/FinW.txt");
                                 salles[x][y].addPorteWest();
+                                salles[x][y].addPorteFinaleEast();
+                                break;
+                            case "FS":
+                                salles[x][y] = new Salle(jeu, "Maps/Salles/FinS.txt");
+                                salles[x][y].addPorteSouth();
+                                salles[x][y].addPorteFinaleNorth();
                                 break;
                             case "E":
                                 salles[x][y] = new Salle(jeu, "Maps/Salles/SalleE.txt");
@@ -120,16 +139,24 @@ public class Niveau {
                 s = salles[x][y];
                 if(s != null){
                     if(s.hasNorth()){
-                        s.getNorth().setJumelle(salles[x][y-1].getSouth());
+                        if(!(s.getNorth() instanceof PorteFinale)){
+                            s.getNorth().setJumelle(salles[x][y-1].getSouth());
+                        }
                     }
                     if(s.hasSouth()){
-                        s.getSouth().setJumelle(salles[x][y+1].getNorth());
+                        if(!(s.getSouth() instanceof PorteFinale)){
+                            s.getSouth().setJumelle(salles[x][y+1].getNorth());
+                        }
                     }
                     if(s.hasWest()){
-                        s.getWest().setJumelle(salles[x-1][y].getEast());
+                        if(!(s.getWest() instanceof PorteFinale)){
+                            s.getWest().setJumelle(salles[x-1][y].getEast());
+                        }
                     }
                     if(s.hasEast()){
-                        s.getEast().setJumelle(salles[x+1][y].getWest());
+                        if(!(s.getEast() instanceof PorteFinale)){
+                            s.getEast().setJumelle(salles[x+1][y].getWest());
+                        }
                     }
                 }
             }

@@ -114,27 +114,47 @@ public class Salle {
     }
 
     public void addPorteWest(){
-        grilleEntitesStatiques[1][9] = new Porte(jeu, 1, 9);
         ((Porte)grilleEntitesStatiques[1][9]).setDirection('w');
         west = (Porte)grilleEntitesStatiques[1][9];
     }
 
     public void addPorteEast(){
-        grilleEntitesStatiques[28][9] = new Porte(jeu, 28, 9);
         ((Porte)grilleEntitesStatiques[28][9]).setDirection('e');
         east = (Porte)grilleEntitesStatiques[28][9];
     }
 
     public void addPorteNorth(){
-        grilleEntitesStatiques[14][1] = new Porte(jeu, 14, 1);
         ((Porte)grilleEntitesStatiques[14][1]).setDirection('n');
         north = (Porte)grilleEntitesStatiques[14][1];
     }
 
     public void addPorteSouth(){
-        grilleEntitesStatiques[14][18] = new Porte(jeu, 14, 18);
         ((Porte)grilleEntitesStatiques[14][18]).setDirection('s');
         south = (Porte)grilleEntitesStatiques[14][18];
+    }
+
+    public void addPorteFinaleWest(){
+        grilleEntitesStatiques[1][8] = new PorteFinale(jeu, 1, 8);
+        ((Porte)grilleEntitesStatiques[1][8]).setDirection('w');
+        west = (Porte)grilleEntitesStatiques[1][8];
+    }
+
+    public void addPorteFinaleEast(){
+        grilleEntitesStatiques[27][9] = new PorteFinale(jeu, 27, 9);
+        ((Porte)grilleEntitesStatiques[27][9]).setDirection('e');
+        east = (Porte)grilleEntitesStatiques[27][9];
+    }
+
+    public void addPorteFinaleNorth(){
+        grilleEntitesStatiques[14][1] = new PorteFinale(jeu, 14, 1);
+        ((Porte)grilleEntitesStatiques[14][1]).setDirection('n');
+        north = (Porte)grilleEntitesStatiques[14][1];
+    }
+
+    public void addPorteFinaleeSouth(){
+        grilleEntitesStatiques[14][17] = new PorteFinale(jeu, 14, 17);
+        ((Porte)grilleEntitesStatiques[14][17]).setDirection('s');
+        south = (Porte)grilleEntitesStatiques[14][17];
     }
 
     public Porte getSouth() {

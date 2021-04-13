@@ -50,7 +50,10 @@ public class Heros {
 
     public void droite() {
         if(orientation == 'e'){
-            if(jeu.getEntite(x+1,y) instanceof Porte){
+            if(jeu.getEntite(x+1, y) instanceof PorteFinale){
+                traverserPorteFinal(x+1, y);
+            }
+            else if(jeu.getEntite(x+1,y) instanceof Porte){
                 traverserPorte(x+1, y);
             }
             else if (traversable(x+1, y)) {
@@ -64,7 +67,10 @@ public class Heros {
 
     public void gauche() {
         if(orientation == 'w'){
-            if(jeu.getEntite(x-1,y) instanceof Porte){
+            if(jeu.getEntite(x-1, y) instanceof PorteFinale){
+                traverserPorteFinal(x-1, y);
+            }
+            else if(jeu.getEntite(x-1,y) instanceof Porte){
                 traverserPorte(x-1, y);
             }
             else if (traversable(x-1, y)) {
@@ -78,7 +84,10 @@ public class Heros {
 
     public void bas() {
         if(orientation == 's'){
-            if(jeu.getEntite(x,y+1) instanceof Porte){
+            if(jeu.getEntite(x, y+1) instanceof PorteFinale){
+                traverserPorteFinal(x, y+1);
+            }
+            else if(jeu.getEntite(x,y+1) instanceof Porte){
                 traverserPorte(x, y+1);
             }
             else if (traversable(x, y+1)) {
@@ -92,7 +101,10 @@ public class Heros {
 
     public void haut() {
         if(orientation == 'n'){
-            if(jeu.getEntite(x,y-1) instanceof Porte){
+            if(jeu.getEntite(x, y-1) instanceof PorteFinale){
+                traverserPorteFinal(x, y-1);
+            }
+            else if(jeu.getEntite(x,y-1) instanceof Porte){
                 traverserPorte(x, y-1);
             }
             else if (traversable(x, y-1)) {
@@ -195,14 +207,14 @@ public class Heros {
                 jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
                 jeu.setIndSalleCouranteX(1);
                 jeu.setIndSalleCouranteY(1);
+                jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()));
             }
         }else{
             jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
             jeu.setIndSalleCouranteX(1);
             jeu.setIndSalleCouranteY(1);
+            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()));
         }
-
-
     }
 
     public void ramasser(){

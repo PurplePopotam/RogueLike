@@ -28,10 +28,11 @@ public class Jeu extends Observable implements Runnable {
 
     public Jeu() {
         indNiveauCourant = 0;
-        indSalleCourante[0] = 1;
-        indSalleCourante[1] = 1;
-        niveaux = new Niveau[1];
+        indSalleCourante[0] = 5;
+        indSalleCourante[1] = 4;
+        niveaux = new Niveau[2];
         niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
+        niveaux[1] = new Niveau(this, "Maps/Niveaux/Niveau_2.txt");
         chargerSalle(niveaux[0].getSalle(indSalleCourante[0], indSalleCourante[1]));
         placerHeros(15, 9);
     }

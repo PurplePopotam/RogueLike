@@ -16,9 +16,9 @@ public class Heros {
 
     private char orientation = 's';
 
-    private Jeu jeu;
+    private final Jeu jeu;
 
-    private Inventaire inventaire;
+    private final Inventaire inventaire;
 
     private Coffre coffreActif;
 
@@ -106,7 +106,7 @@ public class Heros {
 
     public boolean traversable(int x, int y) {
 
-        if (x >0 && x < jeu.SIZE_X && y > 0 && y < jeu.SIZE_Y) {
+        if (x >0 && x < Jeu.SIZE_X && y > 0 && y < Jeu.SIZE_Y) {
             return jeu.getEntite(x, y).traversable();
         } else {
             return false;
@@ -124,11 +124,10 @@ public class Heros {
                     e.setVerouillee(false);
                     e.getJumelle().setVerouillee(false);
 
-                    if (e.isTraversee() != true) {
+                    if (!e.isTraversee()) {
                         enleverCapsule();
                         rechargerCapsule();
                         e.setTraversee(true);
-
                     }
 
                     Porte dest = e.getJumelle();

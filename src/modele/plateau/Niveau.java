@@ -34,17 +34,20 @@ public class Niveau {
                     String s = myReader.next();
                     switch(s){
                         case "D":
-                            salles[i] = new Salle(jeu, "Maps/Debut.txt");
+                            salles[i] = new Salle(jeu, "Maps/Salles/Debut.txt");
                             salles[i].addPorteEst();
+                            System.out.println(s);
                             break;
                         case "F":
-                            salles[i] = new Salle(jeu, "Maps/Fin.txt");
+                            salles[i] = new Salle(jeu, "Maps/Salles/Fin.txt");
                             salles[i].addPorteWest();
+                            System.out.println(s);
                             break;
                         case "H":
-                            salles[i] = new Salle(jeu, "Maps/SalleHorizontale_1.txt");
+                            salles[i] = new Salle(jeu, "Maps/Salles/SalleWE.txt");
                             salles[i].addPorteWest();
                             salles[i].addPorteEst();
+                            System.out.println(s);
                             break;
                     }
                 }

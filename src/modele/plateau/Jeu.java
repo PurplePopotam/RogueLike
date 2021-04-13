@@ -31,7 +31,7 @@ public class Jeu extends Observable implements Runnable {
 
     public Jeu() {
         niveaux = new Niveau[1];
-        niveaux[0] = new Niveau(this, "Maps/Niveau_1.txt");
+        niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
         niveaux[0].initialiserSalles();
         chargerSalle(niveaux[0].getSalle(0));
         placerHeros(15, 10);

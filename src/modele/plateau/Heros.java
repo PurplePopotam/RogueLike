@@ -425,6 +425,7 @@ public class Heros {
 
 
     }
+
     public void enleverCapsule(){
         for(int i = 0; i < getInventaire().getTaille(); i++){
             if(getInventaire().getContenu(i) instanceof Capsule){
@@ -433,6 +434,7 @@ public class Heros {
             }
         }
     }
+
     public void rechargerCapsule(){
         int capsuleposee = 0;
         for(int i = 0; i < getInventaire().getTaille(); i++){

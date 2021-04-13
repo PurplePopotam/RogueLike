@@ -53,6 +53,9 @@ public class Heros {
             if(jeu.getEntite(x+1,y) instanceof Porte){
                 traverserPorte(x+1, y);
             }
+            else if (jeu.getEntite(x+1,y) instanceof CaseVide) {
+                sautVide(x+1,y);
+            }
             else if (traversable(x+1, y)) {
                 x ++;
             }
@@ -62,10 +65,14 @@ public class Heros {
         }
     }
 
+
     public void gauche() {
         if(orientation == 'w'){
             if(jeu.getEntite(x-1,y) instanceof Porte){
                 traverserPorte(x-1, y);
+            }
+            else if (jeu.getEntite(x-1,y) instanceof CaseVide) {
+                sautVide(x-1,y);
             }
             else if (traversable(x-1, y)) {
                 x --;
@@ -81,6 +88,9 @@ public class Heros {
             if(jeu.getEntite(x,y+1) instanceof Porte){
                 traverserPorte(x, y+1);
             }
+            else if (jeu.getEntite(x,y+1) instanceof CaseVide) {
+                sautVide(x,y+1);
+            }
             else if (traversable(x, y+1)) {
                 y ++;
             }
@@ -94,6 +104,9 @@ public class Heros {
         if(orientation == 'n'){
             if(jeu.getEntite(x,y-1) instanceof Porte){
                 traverserPorte(x, y-1);
+            }
+            else if (jeu.getEntite(x,y-1) instanceof CaseVide) {
+                sautVide(x,y-1);
             }
             else if (traversable(x, y-1)) {
                 y --;
@@ -443,5 +456,48 @@ public class Heros {
                 getInventaire().addItem(new Capsule(jeu));
             }
         }
+    }
+
+    public void sautVide(int _x, int _y){
+
+        CaseVide e = (CaseVide)jeu.getEntite(_x,_y);
+
+        switch(orientation){
+            case 'n':
+                e.setTraversable(traversable(x, y-2));
+                if(e.traversable()){
+                    y = y-2;
+                    e.setTraversable(false);
+
+                }
+
+                break;
+            case 'e':
+                e.setTraversable(traversable(x+2, y));
+                if(e.traversable()){
+                    x = x+2;
+                    e.setTraversable(false);
+
+                }
+                break;
+            case 's':
+                e.setTraversable(traversable(x, y+2));
+                if(e.traversable()){
+                    y = y+2;
+                    e.setTraversable(false);
+
+                }
+                break;
+            case 'w':
+                e.setTraversable(traversable(x-2, y));
+                if(e.traversable()){
+                    x = x-2;
+                    e.setTraversable(false);
+
+                }
+                break;
+
+        }
+
     }
 }

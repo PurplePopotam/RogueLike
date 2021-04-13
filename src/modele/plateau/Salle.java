@@ -7,20 +7,20 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Salle {
-    private EntiteStatique[][] grilleEntitesStatiques;
+    private final EntiteStatique[][] grilleEntitesStatiques;
 
     private Porte south;
     private Porte north;
     private Porte west;
     private Porte east;
 
-    private String map;
-    private Jeu jeu;
+    private final String map;
+    private final Jeu jeu;
 
     public Salle(Jeu _jeu, String map) {
         jeu = _jeu;
         this.map = map;
-        grilleEntitesStatiques = new EntiteStatique[jeu.SIZE_X][jeu.SIZE_Y];
+        grilleEntitesStatiques = new EntiteStatique[Jeu.SIZE_X][Jeu.SIZE_Y];
         initialisationDesEntites(this.map);
     }
 
@@ -37,7 +37,7 @@ public class Salle {
     }
 
     public void initialisationDesEntites(String path){
-        double tirage = 0f;
+        double tirage;
         /*Permet de lire une carte depuis un fichier .txt,
           la génération de niveau est donc pour le moment très simplifiée.
           ATTENTION la carte doit faire la même taille que le jeu (SIZE_X,SIZE_Y)
@@ -48,8 +48,8 @@ public class Salle {
             File map = new File(path);
             Scanner myReader = new Scanner(map);
 
-            for(int y = 0; y < jeu.SIZE_Y;y++) {
-                for (int x = 0; x < jeu.SIZE_X; x++) {
+            for(int y = 0; y < Jeu.SIZE_Y;y++) {
+                for (int x = 0; x < Jeu.SIZE_X; x++) {
                     if (myReader.hasNext()) {
 
                         String s = myReader.next();
@@ -141,32 +141,16 @@ public class Salle {
         return south;
     }
 
-    public void setSouth(Porte south) {
-        this.south = south;
-    }
-
     public Porte getNorth() {
         return north;
-    }
-
-    public void setNorth(Porte north) {
-        this.north = north;
     }
 
     public Porte getWest() {
         return west;
     }
 
-    public void setWest(Porte west) {
-        this.west = west;
-    }
-
     public Porte getEast() {
         return east;
-    }
-
-    public void setEast(Porte east) {
-        this.east = east;
     }
 
     public boolean hasEast(){

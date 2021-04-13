@@ -8,8 +8,8 @@ public class Porte extends EntiteStatique {
     private boolean Traversee = false;
     private Porte jumelle;
     private char direction = 'e';
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Porte(Jeu _jeu, int _x, int _y) { super(_jeu); x = _x; y = _y;}
 

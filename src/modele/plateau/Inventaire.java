@@ -6,7 +6,7 @@ public class Inventaire {
 
     private Pickup[] contenu;
 
-    private Jeu jeu;
+    private final Jeu jeu;
 
     private final int taille = 8;
 
@@ -18,16 +18,8 @@ public class Inventaire {
         contenu[2] = new Cle(jeu);
     }
 
-    public Pickup[] getContenu() {
-        return contenu;
-    }
-
     public Pickup getContenu(int i) {
         return contenu[i];
-    }
-
-    public void setContenu(Pickup[] contenu) {
-        this.contenu = contenu;
     }
 
     public int getTaille() {

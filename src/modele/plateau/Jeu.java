@@ -8,16 +8,11 @@ package modele.plateau;
 import modele.entites.*;
 
 import java.util.Observable;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Jeu extends Observable implements Runnable {
 
     public static final int SIZE_X = 30;    //On règle ici la taille maximum des salles
     public static final int SIZE_Y = 20;
-    public static final int nbNiveau = 1;
-    private int pause = 200; // période de rafraichissement
 
     public final double spawnRateCoffre = 0.004;
     public final double spawnRateCle = 0.004;
@@ -25,11 +20,11 @@ public class Jeu extends Observable implements Runnable {
 
     private Heros heros;
 
-    private Niveau[] niveaux;
-    private int[] indSalleCourante = new int[2];
+    private final Niveau[] niveaux;
+    private final int[] indSalleCourante = new int[2];
     private int indNiveauCourant;
 
-    private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
+    private final EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
         indNiveauCourant = 0;
@@ -63,10 +58,6 @@ public class Jeu extends Observable implements Runnable {
 
     public void setIndNiveauCourant(int indNiveauCourant) {
         this.indNiveauCourant = indNiveauCourant;
-    }
-
-    public EntiteStatique[][] getGrille() {
-        return grilleEntitesStatiques;
     }
 
 	public EntiteStatique getEntite(int x, int y) {
@@ -107,6 +98,8 @@ public class Jeu extends Observable implements Runnable {
             notifyObservers();
 
             try {
+                // période de rafraichissement
+                int pause = 200;
                 Thread.sleep(pause);
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -1,17 +1,14 @@
 package modele.plateau;
 
-import modele.entites.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Niveau {
-    private Jeu jeu;
-    private Salle[][] salles;
-    private String mapNiveau;
-    private Porte[] portes;
-    private int taille = 10;
+    private final Jeu jeu;
+    private final Salle[][] salles;
+    private final String mapNiveau;
+    private final int taille = 10;
 
     public Niveau(Jeu _jeu, String mapNiveau) {
         jeu = _jeu;
@@ -117,7 +114,6 @@ public class Niveau {
         // Les bords du plateaux n'ont pas de salles pour faciliter le jumellage
         // Les boucles ne couvrent donc pas les bords du tableau
         Salle s;
-        Salle other;
 
         for(int y = 1; y < taille - 1; y++){
             for(int x = 1; x < taille - 1; x++){

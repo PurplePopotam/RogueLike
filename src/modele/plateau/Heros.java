@@ -197,7 +197,9 @@ public class Heros {
                 jeu.setIndSalleCouranteY(1);
             }
         }else{
-
+            jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
+            jeu.setIndSalleCouranteX(1);
+            jeu.setIndSalleCouranteY(1);
         }
 
 

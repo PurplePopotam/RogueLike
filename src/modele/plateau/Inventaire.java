@@ -13,6 +13,9 @@ public class Inventaire {
     public Inventaire(Jeu _jeu){
         jeu = _jeu;
         contenu = new Pickup[taille];
+        contenu[0] = new Cle(jeu);
+        contenu[1] = new Cle(jeu);
+        contenu[2] = new Cle(jeu);
     }
 
     public Pickup[] getContenu() {

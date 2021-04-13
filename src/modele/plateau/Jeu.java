@@ -27,16 +27,17 @@ public class Jeu extends Observable implements Runnable {
 
     private Niveau[] niveaux;
     private int[] indSalleCourante = new int[2];
-    private int indNiveauCourant = 0;
+    private int indNiveauCourant;
 
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
+        indNiveauCourant = 0;
         indSalleCourante[0] = 1;
         indSalleCourante[1] = 1;
         niveaux = new Niveau[1];
         niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
-        chargerSalle(niveaux[0].getSalle(1, 1));
+        chargerSalle(niveaux[0].getSalle(indSalleCourante[0], indSalleCourante[1]));
         placerHeros(15, 9);
     }
 
@@ -58,6 +59,10 @@ public class Jeu extends Observable implements Runnable {
 
     public void setIndSalleCouranteY(int _y) {
         this.indSalleCourante[1] = _y;
+    }
+
+    public void setIndNiveauCourant(int indNiveauCourant) {
+        this.indNiveauCourant = indNiveauCourant;
     }
 
     public EntiteStatique[][] getGrille() {

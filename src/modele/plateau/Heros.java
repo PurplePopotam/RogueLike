@@ -182,7 +182,23 @@ public class Heros {
                 }
             }
         }
+    }
 
+    public void traverserPorteFinal(int _x, int _y){
+        PorteFinale e = (PorteFinale)jeu.getEntite(_x, _y);
+
+        if(e.isVerouillee()){
+            if(getInventaire().hasKey() != -1){
+                getInventaire().removeItem(getInventaire().hasKey());
+                e.setVerouillee(false);
+
+                jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
+                jeu.setIndSalleCouranteX(1);
+                jeu.setIndSalleCouranteY(1);
+            }
+        }else{
+
+        }
 
 
     }
@@ -198,12 +214,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x, y-1);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y-1);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x, y-1);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y-1);
                     }
                 }
                 break;
@@ -215,12 +235,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x+1, y);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x + 1, y);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x+1, y);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x + 1, y);
                     }
                 }
                 break;
@@ -232,12 +256,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x, y+1);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y + 1);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x, y+1);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y + 1);
                     }
                 }
                 break;
@@ -249,12 +277,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x-1, y);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x - 1, y);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x-1, y);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x - 1, y);
                     }
                 }
                 break;

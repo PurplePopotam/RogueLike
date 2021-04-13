@@ -8,16 +8,11 @@ package modele.plateau;
 import modele.entites.*;
 
 import java.util.Observable;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Jeu extends Observable implements Runnable {
 
     public static final int SIZE_X = 30;    //On règle ici la taille maximum des salles
     public static final int SIZE_Y = 20;
-    public static final int nbNiveau = 1;
-    private int pause = 200; // période de rafraichissement
 
     public final double spawnRateCoffre = 0.004;
     public final double spawnRateCle = 0.004;
@@ -25,19 +20,21 @@ public class Jeu extends Observable implements Runnable {
 
     private Heros heros;
 
-    private Niveau[] niveaux;
-    private int[] indSalleCourante = new int[2];
-    private int indNiveauCourant = 0;
+    private final Niveau[] niveaux;
+    private final int[] indSalleCourante = new int[2];
+    private int indNiveauCourant;
 
-    private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
+    private final EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
-        indSalleCourante[0] = 1;
-        indSalleCourante[1] = 1;
-        niveaux = new Niveau[1];
+        indNiveauCourant = 0;
+        indSalleCourante[0] = 5;
+        indSalleCourante[1] = 4;
+        niveaux = new Niveau[2];
         niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
-        chargerSalle(niveaux[0].getSalle(1, 1));
-        placerHeros(15, 10);
+        niveaux[1] = new Niveau(this, "Maps/Niveaux/Niveau_2.txt");
+        chargerSalle(niveaux[0].getSalle(indSalleCourante[0], indSalleCourante[1]));
+        placerHeros(15, 9);
     }
 
     public Heros getHeros() {
@@ -60,8 +57,8 @@ public class Jeu extends Observable implements Runnable {
         this.indSalleCourante[1] = _y;
     }
 
-    public EntiteStatique[][] getGrille() {
-        return grilleEntitesStatiques;
+    public void setIndNiveauCourant(int indNiveauCourant) {
+        this.indNiveauCourant = indNiveauCourant;
     }
 
 	public EntiteStatique getEntite(int x, int y) {
@@ -77,92 +74,6 @@ public class Jeu extends Observable implements Runnable {
     }
 
     public int getIndNiveauCourant(){return indNiveauCourant;}
-
-    private void initialisationDesEntites(String path) {
-
-        double tirage = 0f;
-        /*Permet de lire une carte depuis un fichier .txt,
-          la génération de niveau est donc pour le moment très simplifiée.
-          ATTENTION la carte doit faire la même taille que le jeu (SIZE_X,SIZE_Y)
-          sinon le comportement est complètement erronné.
-         */
-
-        try{
-            File map = new File(path);
-            Scanner myReader = new Scanner(map);
-
-            for(int y = 0; y < SIZE_Y;y++) {
-                for (int x = 0; x < SIZE_X; x++) {
-                    if (myReader.hasNext()) {
-
-                        String s = myReader.next();
-
-                        switch (s) {
-                            case "_":
-                                tirage = Math.random();
-
-                                if(tirage < spawnRateCoffre){
-                                    addEntiteStatique(new Coffre(this), x, y);
-                                    Coffre c = (Coffre)getEntite(x,y);
-                                    c.initialiserContenu();
-                                    break;
-                                }
-                                else if(tirage > spawnRateCoffre && tirage < spawnRateCoffre + spawnRateCapsule){
-                                    addEntiteStatique(new Capsule(this), x, y); break;
-                                }
-                                else if(tirage > spawnRateCoffre + spawnRateCapsule && tirage < spawnRateCapsule + spawnRateCle + spawnRateCoffre){
-                                    addEntiteStatique(new Cle(this), x, y); break;
-                                }
-                                else{
-                                    addEntiteStatique(new CaseNormale(this), x, y);
-                                    break;
-                                }
-                            case "M":
-                                addEntiteStatique(new Mur(this), x, y);
-                                break;
-                            case "P":
-                                addEntiteStatique(new Porte(this, x, y), x, y);
-                                break;
-                            case "A":
-                                addEntiteStatique(new Coffre(this), x, y);
-                                Coffre c = (Coffre)getEntite(x,y);
-                                c.initialiserContenu();
-                                break;
-                            case "B":
-                                addEntiteStatique(new Cle(this), x, y);
-                                break;
-                            case "C":
-                                addEntiteStatique(new Capsule(this), x, y);
-                                break;
-                            case "D":
-                                addEntiteStatique(new DalleUsageUnique(this), x, y);
-                                break;
-                            case "V":
-                                addEntiteStatique(new CaseVide(this), x, y);
-                                break;
-                            case ".":
-                                break;
-
-                        }
-                    }
-
-                }
-            }
-
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Erreur, la map n'a pas été trouvée.");
-            e.printStackTrace();
-        }
-
-        //Entités particulières qui ont besoin d'être initialisées à part ou besoin d'autres initialisation
-        heros = new Heros(this, 15, 10);
-        addEntiteStatique(new CaseNormale(this), 10, 4);    //Pour être sûr qu'il n'y est pas de pickup sous le joueur en début de partie
-
-        Porte porte1 = (Porte)this.getEntite(28,9);
-        porte1.setDirection('e');
-
-    }
 
     public void chargerSalle(Salle s){
         for(int x = 0; x < SIZE_X; x++){
@@ -188,6 +99,8 @@ public class Jeu extends Observable implements Runnable {
             notifyObservers();
 
             try {
+                // période de rafraichissement
+                int pause = 200;
                 Thread.sleep(pause);
             } catch (InterruptedException e) {
                 e.printStackTrace();

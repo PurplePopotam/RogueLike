@@ -26,7 +26,7 @@ import modele.plateau.*;
  *
  */
 public class VueControleur extends JFrame implements Observer {
-    private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement,
+    private final Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement,
     // permet de communiquer les actions clavier (ou souris)
 
     private final int sizeX; // taille de la grille affichée
@@ -35,7 +35,7 @@ public class VueControleur extends JFrame implements Observer {
     // icones affichées dans la grille
     private ImageIcon icoHeroN, icoHeroE, icoHeroW, icoHeroS;   //Heros
     private ImageIcon icoCaseNormale, icoDalleUsageUnique, icoDalleUsageUnique_Enflammee;       //Dalles
-    private ImageIcon icoMur, icoPorte;     //Murs portes
+    private ImageIcon icoMur, icoPorte, icoPorteFinale;     //Murs portes
     private ImageIcon icoCle, icoCapsule, icoCoffre;    //Pickups
     private ImageIcon icoCaseVide; //CaseVide
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône,
@@ -43,17 +43,17 @@ public class VueControleur extends JFrame implements Observer {
 
     private ImageIcon icoCleInv, icoCapsuleInv, icoCoffreInv, icoVideInv;
 
-    private JFrame inventaire;
+    private final JFrame inventaire;
     private int tailleInv;
     private JLabel[][] tabJLabelInv;    //cases graphiques pour l'inventaire
 
-    private JFrame coffre;
+    private final JFrame coffre;
     private final int tailleCoffre = 5;
     private JLabel[][] tabJLabelCoffre;     //cases graphiques pour les coffres
 
     public VueControleur(Jeu _jeu) {
-        sizeX = _jeu.SIZE_X;
-        sizeY = _jeu.SIZE_Y;
+        sizeX = Jeu.SIZE_X;
+        sizeY = Jeu.SIZE_Y;
         jeu = _jeu;
 
         inventaire = new JFrame("Inventaire");
@@ -167,6 +167,7 @@ public class VueControleur extends JFrame implements Observer {
         icoDalleUsageUnique_Enflammee = chargerIcone("Images/DalleUsageUnique_Enflammee.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoPorte = chargerIcone("Images/Porte.png");
+        icoPorteFinale = chargerIcone("Images/PorteFinal.png");
         icoCaseVide = chargerIcone( "Images/CaseVide.png");
         //Icones Pickups
         icoCle = chargerIcone("Images/Clef.png");
@@ -269,6 +270,8 @@ public class VueControleur extends JFrame implements Observer {
                     tabJLabel[x][y].setIcon(icoCle);
                 } else if (e instanceof Capsule){
                     tabJLabel[x][y].setIcon(icoCapsule);
+                } else if(e instanceof PorteFinale){
+                    tabJLabel[x][y].setIcon(icoPorteFinale);
                 } else if (e instanceof Porte){
                     tabJLabel[x][y].setIcon(icoPorte);
                 } else if (e instanceof DalleUsageUnique){
@@ -280,7 +283,8 @@ public class VueControleur extends JFrame implements Observer {
                     }
                 } else if (e instanceof CaseVide){
                     tabJLabel[x][y].setIcon(icoCaseVide);
-                } else {
+                }
+                else {
                     tabJLabel[x][y].setIcon(null);
                 }
             }

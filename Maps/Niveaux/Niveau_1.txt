@@ -2,7 +2,7 @@
 . D WS . S . . . . .
 . . NS . NS . . . . .
 . . NS . NS . . . . .
-. . NE WE NSEW F . . . .
+. . NE WE NSEW FW . . . .
 . . . . NS . . . . .
 . . . . NS . . . . .
 . . . . N . . . . .

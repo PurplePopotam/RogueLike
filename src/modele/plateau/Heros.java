@@ -16,9 +16,9 @@ public class Heros {
 
     private char orientation = 's';
 
-    private Jeu jeu;
+    private final Jeu jeu;
 
-    private Inventaire inventaire;
+    private final Inventaire inventaire;
 
     private Coffre coffreActif;
 
@@ -50,7 +50,10 @@ public class Heros {
 
     public void droite() {
         if(orientation == 'e'){
-            if(jeu.getEntite(x+1,y) instanceof Porte){
+            if(jeu.getEntite(x+1, y) instanceof PorteFinale){
+                traverserPorteFinal(x+1, y);
+            }
+            else if(jeu.getEntite(x+1,y) instanceof Porte){
                 traverserPorte(x+1, y);
             }
             else if (jeu.getEntite(x+1,y) instanceof CaseVide) {
@@ -68,7 +71,10 @@ public class Heros {
 
     public void gauche() {
         if(orientation == 'w'){
-            if(jeu.getEntite(x-1,y) instanceof Porte){
+            if(jeu.getEntite(x-1, y) instanceof PorteFinale){
+                traverserPorteFinal(x-1, y);
+            }
+            else if(jeu.getEntite(x-1,y) instanceof Porte){
                 traverserPorte(x-1, y);
             }
             else if (jeu.getEntite(x-1,y) instanceof CaseVide) {
@@ -85,7 +91,10 @@ public class Heros {
 
     public void bas() {
         if(orientation == 's'){
-            if(jeu.getEntite(x,y+1) instanceof Porte){
+            if(jeu.getEntite(x, y+1) instanceof PorteFinale){
+                traverserPorteFinal(x, y+1);
+            }
+            else if(jeu.getEntite(x,y+1) instanceof Porte){
                 traverserPorte(x, y+1);
             }
             else if (jeu.getEntite(x,y+1) instanceof CaseVide) {
@@ -102,7 +111,10 @@ public class Heros {
 
     public void haut() {
         if(orientation == 'n'){
-            if(jeu.getEntite(x,y-1) instanceof Porte){
+            if(jeu.getEntite(x, y-1) instanceof PorteFinale){
+                traverserPorteFinal(x, y-1);
+            }
+            else if(jeu.getEntite(x,y-1) instanceof Porte){
                 traverserPorte(x, y-1);
             }
             else if (jeu.getEntite(x,y-1) instanceof CaseVide) {
@@ -119,7 +131,7 @@ public class Heros {
 
     public boolean traversable(int x, int y) {
 
-        if (x >0 && x < jeu.SIZE_X && y > 0 && y < jeu.SIZE_Y) {
+        if (x >0 && x < Jeu.SIZE_X && y > 0 && y < Jeu.SIZE_Y) {
             return jeu.getEntite(x, y).traversable();
         } else {
             return false;
@@ -127,39 +139,94 @@ public class Heros {
     }
 
     public void traverserPorte(int _x, int _y){
-        EntiteStatique e = jeu.getEntite(_x,_y);
+        Porte e = (Porte)jeu.getEntite(_x,_y);
 
-        if(e instanceof Porte && ((Porte) e).getJumelle() != null){
-            if(((Porte) e).isTraversee() != true ){
-                enleverCapsule();
-                rechargerCapsule();
-                ((Porte) e).setTraversee(true);
+        if(e.getJumelle() != null) {
+            if ((e.isVerouillee())) {
+                if (getInventaire().hasKey() != -1) {
 
+                    getInventaire().removeItem(getInventaire().hasKey());
+                    e.setVerouillee(false);
+                    e.getJumelle().setVerouillee(false);
+
+                    if (!e.isTraversee()) {
+                        enleverCapsule();
+                        rechargerCapsule();
+                        e.setTraversee(true);
+                    }
+
+                    Porte dest = e.getJumelle();
+                    switch (dest.getDirection()){
+                        case 'n':
+                            x = dest.getX(); y = dest.getY() + 1;
+                            jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 's':
+                            x = dest.getX(); y = dest.getY() - 1;
+                            jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 'e':
+                            x = dest.getX() - 1; y = dest.getY();
+                            jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+                        case 'w':
+                            x = dest.getX() + 1; y = dest.getY();
+                            jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
+                            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                            break;
+
+                    }
+                }
+            } else{
+                Porte dest = e.getJumelle();
+                switch (dest.getDirection()){
+                    case 'n':
+                        x = dest.getX(); y = dest.getY() + 1;
+                        jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 's':
+                        x = dest.getX(); y = dest.getY() - 1;
+                        jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 'e':
+                        x = dest.getX() - 1; y = dest.getY();
+                        jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+                    case 'w':
+                        x = dest.getX() + 1; y = dest.getY();
+                        jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
+                        jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
+                        break;
+
+                }
             }
+        }
+    }
 
-            Porte dest = ((Porte) e).getJumelle();
-            switch (dest.getDirection()){
-                case 'n':
-                    x = dest.getX(); y = dest.getY() + 1;
-                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 's':
-                    x = dest.getX(); y = dest.getY() - 1;
-                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 'e':
-                    x = dest.getX() - 1; y = dest.getY();
-                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
-                case 'w':
-                    x = dest.getX() + 1; y = dest.getY();
-                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
-                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
-                    break;
+    public void traverserPorteFinal(int _x, int _y){
+        PorteFinale e = (PorteFinale)jeu.getEntite(_x, _y);
+
+        if(e.isVerouillee()){
+            if(getInventaire().hasKey() != -1){
+                getInventaire().removeItem(getInventaire().hasKey());
+                e.setVerouillee(false);
+
+                jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
+                jeu.setIndSalleCouranteX(1);
+                jeu.setIndSalleCouranteY(1);
+                jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()));
             }
+        }else{
+            jeu.setIndNiveauCourant(jeu.getIndNiveauCourant()+1);
+            jeu.setIndSalleCouranteX(1);
+            jeu.setIndSalleCouranteY(1);
+            jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()));
         }
     }
 
@@ -174,12 +241,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x, y-1);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y-1);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x, y-1);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x , y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y-1);
                     }
                 }
                 break;
@@ -191,12 +262,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x+1, y);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x + 1, y);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x+1, y);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x+1, y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x + 1, y);
                     }
                 }
                 break;
@@ -208,12 +283,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x, y+1);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y + 1);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x, y+1);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x, y+1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x, y + 1);
                     }
                 }
                 break;
@@ -225,12 +304,16 @@ public class Heros {
                             inventaire.addItem((Pickup) e);
                             jeu.removeEntiteStatique(x-1, y);
                             jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x - 1, y);
                         }
                     }
                     else{
                         inventaire.addItem((Pickup) e);
                         jeu.removeEntiteStatique(x-1, y);
                         jeu.addEntiteStatique(new CaseNormale(jeu), x-1, y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new CaseNormale(jeu), x - 1, y);
                     }
                 }
                 break;

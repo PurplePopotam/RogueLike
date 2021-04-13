@@ -4,7 +4,7 @@ import modele.plateau.Jeu;
 
 public class Coffre extends Pickup {
 
-    private Pickup[] contenu;
+    private final Pickup[] contenu;
     private final int taille = 5;
     private final double spawnRateCle = 0.2;
     private final double spawnRateCoffre = 0.05;
@@ -35,16 +35,8 @@ public class Coffre extends Pickup {
         }
     }
 
-    public Pickup[] getContenu() {
-        return contenu;
-    }
-
     public Pickup getContenu(int i){
         return contenu[i];
-    }
-
-    public int getTaille() {
-        return taille;
     }
 
     public boolean isEmpty(){

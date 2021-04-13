@@ -11,7 +11,7 @@ public class Porte extends EntiteStatique {
     private int x;
     private int y;
 
-    public Porte(Jeu _jeu, int _x, int _y) { super(_jeu); jumelle = null; x = _x; y = _y;}
+    public Porte(Jeu _jeu, int _x, int _y) { super(_jeu); x = _x; y = _y;}
 
     public boolean isVerouillee() {
         return Verouillee;

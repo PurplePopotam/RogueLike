@@ -24,16 +24,19 @@ public class Jeu extends Observable implements Runnable {
     public final double spawnRateCapsule = 0.01;
 
     private Heros heros;
+
     private Niveau[] niveaux;
-    private int indSalleCourante = 0;
+    private int[] indSalleCourante = new int[2];
     private int indNiveauCourant = 0;
+
     private EntiteStatique[][] grilleEntitesStatiques = new EntiteStatique[SIZE_X][SIZE_Y];
 
     public Jeu() {
+        indSalleCourante[0] = 1;
+        indSalleCourante[1] = 1;
         niveaux = new Niveau[1];
         niveaux[0] = new Niveau(this, "Maps/Niveaux/Niveau_1.txt");
-        niveaux[0].initialiserSalles();
-        chargerSalle(niveaux[0].getSalle(0));
+        chargerSalle(niveaux[0].getSalle(1, 1));
         placerHeros(15, 10);
     }
 
@@ -41,12 +44,20 @@ public class Jeu extends Observable implements Runnable {
         return heros;
     }
 
-    public int getIndSalleCourante() {
-        return indSalleCourante;
+    public int getIndSalleCouranteX() {
+        return indSalleCourante[0];
     }
 
-    public void setIndSalleCourante(int indSalleCourante) {
-        this.indSalleCourante = indSalleCourante;
+    public int getIndSalleCouranteY() {
+        return indSalleCourante[1];
+    }
+
+    public void setIndSalleCouranteX(int _x) {
+        this.indSalleCourante[0] = _x;
+    }
+
+    public void setIndSalleCouranteY(int _y) {
+        this.indSalleCourante[1] = _y;
     }
 
     public EntiteStatique[][] getGrille() {
@@ -64,6 +75,8 @@ public class Jeu extends Observable implements Runnable {
 	public Niveau getNiveau(int i){
         return niveaux[i];
     }
+
+    public int getIndNiveauCourant(){return indNiveauCourant;}
 
     private void initialisationDesEntites(String path) {
 

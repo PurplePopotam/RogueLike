@@ -8,8 +8,12 @@ import java.util.Scanner;
 
 public class Salle {
     private EntiteStatique[][] grilleEntitesStatiques;
-    private Porte entrée;
-    private Porte sortie;
+
+    private Porte south;
+    private Porte north;
+    private Porte west;
+    private Porte east;
+
     private String map;
     private Jeu jeu;
 
@@ -18,22 +22,6 @@ public class Salle {
         this.map = map;
         grilleEntitesStatiques = new EntiteStatique[jeu.SIZE_X][jeu.SIZE_Y];
         initialisationDesEntites(this.map);
-    }
-
-    public Porte getEntrée() {
-        return entrée;
-    }
-
-    public void setEntrée(Porte entrée) {
-        this.entrée = entrée;
-    }
-
-    public Porte getSortie() {
-        return sortie;
-    }
-
-    public void setSortie(Porte sortie) {
-        this.sortie = sortie;
     }
 
     public EntiteStatique getEntiteStatique(int x, int y){
@@ -128,22 +116,72 @@ public class Salle {
     public void addPorteWest(){
         grilleEntitesStatiques[1][9] = new Porte(jeu, 1, 9);
         ((Porte)grilleEntitesStatiques[1][9]).setDirection('w');
-        setEntrée(((Porte)grilleEntitesStatiques[1][9]));
+        west = (Porte)grilleEntitesStatiques[1][9];
     }
 
-    public void addPorteEst(){
+    public void addPorteEast(){
         grilleEntitesStatiques[28][9] = new Porte(jeu, 28, 9);
         ((Porte)grilleEntitesStatiques[28][9]).setDirection('e');
-        setSortie((Porte)grilleEntitesStatiques[28][9]);
+        east = (Porte)grilleEntitesStatiques[28][9];
     }
 
-    public void addPorteNord(){
+    public void addPorteNorth(){
         grilleEntitesStatiques[14][1] = new Porte(jeu, 14, 1);
         ((Porte)grilleEntitesStatiques[14][1]).setDirection('n');
+        north = (Porte)grilleEntitesStatiques[14][1];
     }
 
-    public void addPorteSud(){
+    public void addPorteSouth(){
         grilleEntitesStatiques[14][18] = new Porte(jeu, 14, 18);
         ((Porte)grilleEntitesStatiques[14][18]).setDirection('s');
+        south = (Porte)grilleEntitesStatiques[14][18];
+    }
+
+    public Porte getSouth() {
+        return south;
+    }
+
+    public void setSouth(Porte south) {
+        this.south = south;
+    }
+
+    public Porte getNorth() {
+        return north;
+    }
+
+    public void setNorth(Porte north) {
+        this.north = north;
+    }
+
+    public Porte getWest() {
+        return west;
+    }
+
+    public void setWest(Porte west) {
+        this.west = west;
+    }
+
+    public Porte getEast() {
+        return east;
+    }
+
+    public void setEast(Porte east) {
+        this.east = east;
+    }
+
+    public boolean hasEast(){
+        return(east != null);
+    }
+
+    public boolean hasNorth(){
+        return(north != null);
+    }
+
+    public boolean hasWest(){
+        return(west != null);
+    }
+
+    public boolean hasSouth(){
+        return(south != null);
     }
 }

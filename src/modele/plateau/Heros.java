@@ -128,23 +128,23 @@ public class Heros {
             switch (dest.getDirection()){
                 case 'n':
                     x = dest.getX(); y = dest.getY() + 1;
-                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()+1);
-                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() + 1 );
+                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
                     break;
                 case 's':
                     x = dest.getX(); y = dest.getY() - 1;
-                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()-1);
-                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    jeu.setIndSalleCouranteY(jeu.getIndSalleCouranteY() - 1 );
+                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
                     break;
                 case 'e':
                     x = dest.getX() - 1; y = dest.getY();
-                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()-1);
-                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() - 1 );
+                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
                     break;
                 case 'w':
                     x = dest.getX() + 1; y = dest.getY();
-                    jeu.setIndSalleCourante(jeu.getIndSalleCourante()+1);
-                    jeu.chargerSalle(jeu.getNiveau(0).getSalle(jeu.getIndSalleCourante()));
+                    jeu.setIndSalleCouranteX(jeu.getIndSalleCouranteX() + 1 );
+                    jeu.chargerSalle(jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(),jeu.getIndSalleCouranteY()));
                     break;
             }
         }

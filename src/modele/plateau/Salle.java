@@ -36,7 +36,7 @@ public class Salle {
         grilleEntitesStatiques[x][y] = null;
     }
 
-    public void initialisationDesEntites(String path){
+    private void initialisationDesEntites(String path){
         double tirage;
         /*Permet de lire une carte depuis un fichier .txt,
           la génération de niveau est donc pour le moment très simplifiée.

@@ -250,7 +250,6 @@ public class VueControleur extends JFrame implements Observer {
         coffre.add(grilleJLabelsCoffre);
     }
 
-    
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabJLabel)
      */
@@ -310,7 +309,7 @@ public class VueControleur extends JFrame implements Observer {
         //affichage Heros
     }
 
-    public void mettreAJourAffichageInventaire(){
+    private void mettreAJourAffichageInventaire(){
         tailleInv = jeu.getHeros().getInventaire().getTaille();
 
         for(int y = 0; y < tailleInv; y++){
@@ -330,7 +329,7 @@ public class VueControleur extends JFrame implements Observer {
         }
     }
 
-    public void mettreAJourAffichageHeros(){
+    private void mettreAJourAffichageHeros(){
         switch(jeu.getHeros().getOrientation()){
             case 'n':
                 tabJLabel[jeu.getHeros().getX()][jeu.getHeros().getY()].setIcon(icoHeroN); break;
@@ -344,7 +343,7 @@ public class VueControleur extends JFrame implements Observer {
         }
     }
 
-    public void mettreAJourAffichageCoffre(){
+    private void mettreAJourAffichageCoffre(){
         if(jeu.getHeros().getCoffreActif() != null){
             for(int y = 0; y < tailleCoffre; y++){
                 Pickup p = jeu.getHeros().getCoffreActif().getContenu(y);

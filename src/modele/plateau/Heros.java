@@ -330,22 +330,23 @@ public class Heros {
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x, y-1);
                         jeu.addEntiteStatique(new Cle(jeu), x, y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Cle(jeu), x, y-1);
                     } else if(inventaire.getContenu(i) instanceof Coffre){
                         if(((Coffre)inventaire.getContenu(i)).isEmpty()){
                             inventaire.removeItem(i);
                             jeu.removeEntiteStatique(x, y-1);
                             jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
-                        }
-                        else{
-                            jeu.removeEntiteStatique(x, y-1);
-                            jeu.addEntiteStatique(new Coffre(jeu), x, y-1);
-                            inventaire.removeItem(i);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Coffre(jeu), x, y-1);
                         }
 
                     } else if(inventaire.getContenu(i) instanceof Capsule){
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x, y-1);
                         jeu.addEntiteStatique(new Capsule(jeu), x, y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x,y-1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Capsule(jeu), x, y-1);
                     }
                 }
                 break;
@@ -356,14 +357,23 @@ public class Heros {
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x+1,y);
                         jeu.addEntiteStatique(new Cle(jeu), x+1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Cle(jeu), x + 1, y);
                     } else if(inventaire.getContenu(i) instanceof Coffre){
-                        inventaire.removeItem(i);
-                        jeu.removeEntiteStatique(x+1,y);
-                        jeu.addEntiteStatique(new Coffre(jeu), x+1,y);
+                        if(((Coffre)inventaire.getContenu(i)).isEmpty()){
+                            inventaire.removeItem(i);
+                            jeu.removeEntiteStatique(x+1,y);
+                            jeu.addEntiteStatique(new Coffre(jeu), x+1,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Coffre(jeu), x + 1, y);
+                        }
+
                     } else if(inventaire.getContenu(i) instanceof Capsule){
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x+1,y);
                         jeu.addEntiteStatique(new Capsule(jeu), x+1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x + 1 ,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Capsule(jeu), x + 1, y);
                     }
                 }
                 break;
@@ -374,14 +384,23 @@ public class Heros {
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x,y+1);
                         jeu.addEntiteStatique(new Cle(jeu), x,y+1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Cle(jeu), x, y + 1);
                     } else if(inventaire.getContenu(i) instanceof Coffre){
-                        inventaire.removeItem(i);
-                        jeu.removeEntiteStatique(x,y+1);
-                        jeu.addEntiteStatique(new Coffre(jeu), x,y+1);
+                        if(((Coffre)inventaire.getContenu(i)).isEmpty()){
+                            inventaire.removeItem(i);
+                            jeu.removeEntiteStatique(x,y+1);
+                            jeu.addEntiteStatique(new Coffre(jeu), x,y+1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Coffre(jeu), x, y + 1);
+                        }
+
                     } else if(inventaire.getContenu(i) instanceof Capsule){
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x,y+1);
                         jeu.addEntiteStatique(new Capsule(jeu), x,y+1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x ,y + 1);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Capsule(jeu), x, y + 1);
                     }
                 }
                 break;
@@ -392,14 +411,23 @@ public class Heros {
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x-1,y);
                         jeu.addEntiteStatique(new Cle(jeu), x-1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Cle(jeu), x - 1, y);
                     } else if(inventaire.getContenu(i) instanceof Coffre){
-                        inventaire.removeItem(i);
-                        jeu.removeEntiteStatique(x-1,y);
-                        jeu.addEntiteStatique(new Coffre(jeu), x-1,y);
+                        if(((Coffre)inventaire.getContenu(i)).isEmpty()){
+                            inventaire.removeItem(i);
+                            jeu.removeEntiteStatique(x-1,y);
+                            jeu.addEntiteStatique(new Coffre(jeu), x-1,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                            jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Coffre(jeu), x - 1, y);
+                        }
+
                     } else if(inventaire.getContenu(i) instanceof Capsule){
                         inventaire.removeItem(i);
                         jeu.removeEntiteStatique(x-1,y);
                         jeu.addEntiteStatique(new Capsule(jeu),x-1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).removeEntiteStatique(x - 1,y);
+                        jeu.getNiveau(jeu.getIndNiveauCourant()).getSalle(jeu.getIndSalleCouranteX(), jeu.getIndSalleCouranteY()).addEntiteStatique(new Capsule(jeu), x - 1, y);
                     }
                 }
                 break;
@@ -544,16 +572,13 @@ public class Heros {
     public void sautVide(int _x, int _y){
 
         CaseVide e = (CaseVide)jeu.getEntite(_x,_y);
-
         switch(orientation){
             case 'n':
                 e.setTraversable(traversable(x, y-2));
                 if(e.traversable()){
-                    y = y-2;
+                    y = y -2;
                     e.setTraversable(false);
-
                 }
-
                 break;
             case 'e':
                 e.setTraversable(traversable(x+2, y));
@@ -568,7 +593,6 @@ public class Heros {
                 if(e.traversable()){
                     y = y+2;
                     e.setTraversable(false);
-
                 }
                 break;
             case 'w':
@@ -576,7 +600,6 @@ public class Heros {
                 if(e.traversable()){
                     x = x-2;
                     e.setTraversable(false);
-
                 }
                 break;
 

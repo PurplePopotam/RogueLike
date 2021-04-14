@@ -25,7 +25,7 @@ public class Niveau {
         return salles[x][y];
     }
 
-    public void initialiserSalles(){
+    private void initialiserSalles(){
 
         //Chargement des salles
         try{
@@ -127,7 +127,7 @@ public class Niveau {
         }
     }
 
-    public void jumellerPortes(){
+    private void jumellerPortes(){
 
         //Jumellage des portes
         // Les bords du plateaux n'ont pas de salles pour faciliter le jumellage
